@@ -1,6 +1,7 @@
 package org.opencompare;
 
 import org.opencompare.api.java.*;
+import org.opencompare.api.java.io.HTMLExporter;
 import org.opencompare.api.java.util.PCMVisitor;
 import org.opencompare.api.java.value.*;
 
