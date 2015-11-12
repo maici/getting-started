@@ -1,4 +1,4 @@
-package org.opencompare.org.opencompare.jsonParser;
+package org.opencompare.jsonParser;
 
 import java.util.HashMap;
 
@@ -11,10 +11,11 @@ public class Style {
     private String color;
     private String font;
     private String fontStyle;
-    private String fontSize;
+    private int fontSize;
     private HashMap<String, String> style;
 
-
+    public Style() {
+    }
 
     public String getBackgroundColor() {
         return backgroundColor;
@@ -22,6 +23,7 @@ public class Style {
 
     public void setBackgroundColor(String backgroundColor) {
         this.backgroundColor = backgroundColor;
+        this.style.put("background-color", backgroundColor);
     }
 
     public String getColor() {
@@ -30,6 +32,7 @@ public class Style {
 
     public void setColor(String color) {
         this.color = color;
+        this.style.put("color", color);
     }
 
     public String getFont() {
@@ -38,6 +41,7 @@ public class Style {
 
     public void setFont(String font) {
         this.font = font;
+        this.style.put("font-family", font);
     }
 
     public String getFontStyle() {
@@ -46,15 +50,16 @@ public class Style {
 
     public void setFontStyle(String fontStyle) {
         this.fontStyle = fontStyle;
+        if(fontStyle == "bold") this.style.put("font-weight", fontStyle);
+        else if (fontStyle == "italic") this.style.put("font-style", fontStyle);
+        else this.style.put("font-weight", "normal");
     }
 
-    public String getFontSize() {
+    public int getFontSize() {
         return fontSize;
     }
 
-    public void setFontSize(String fontSize) {
+    public void setFontSize(int fontSize) {
         this.fontSize = fontSize;
     }
-
-
 }

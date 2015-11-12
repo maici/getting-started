@@ -1,4 +1,4 @@
-package org.opencompare.org.opencompare.jsonParser;
+package org.opencompare.jsonParser;
 
 import com.google.gson.*;
 
