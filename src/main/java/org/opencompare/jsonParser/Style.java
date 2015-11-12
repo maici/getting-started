@@ -13,13 +13,13 @@ public class Style {
     }
 
     public void setBackgroundColor(String backgroundColor) {
-        if(backgroundColor.matches("-?[0-9a-fA-F]+"))
+        if(backgroundColor.matches("^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$"))
             this.style.put("background-color", "#" + backgroundColor);
         else throw new NumberFormatException("background color must be in hexadecimal format");
     }
 
     public void setColor(String color) {
-        if(color.matches("-?[0-9a-fA-F]+"))
+        if(color.matches("^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$"))
             this.style.put("color", "#" + color);
         else throw new NumberFormatException("color must be in hexadecimal format");
     }
