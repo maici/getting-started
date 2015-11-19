@@ -1,7 +1,9 @@
 package org.opencompare.jsonParser;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Represent the style parameters of the elements (features/products)
@@ -10,11 +12,11 @@ import java.util.List;
 public class ElementsParams {
 
     private Style style;
-    private List<ElementParams> elements;
+    private Map<Integer,ElementParams> elements;
     private List<IOperation> operations;
 
     public ElementsParams() {
-        this.elements = new ArrayList<>();
+        this.elements = new HashMap<>();
         this.operations = new ArrayList<>();
     }
 
@@ -36,20 +38,20 @@ public class ElementsParams {
 
     /**
      * Add style parameters of an element (feature/product)
+     * @param key Integer
      * @param elementParams ElementParams
      * @return boolean
      */
-    public boolean addElement(ElementParams elementParams) {
-        return elements.add(elementParams);
+    public ElementParams put(Integer key, ElementParams elementParams) {
+        return elements.put(key, elementParams);
     }
 
     /**
      * Remove style parameters of an element (feature/product)
-     * @param elementParams ElementParams
-     * @return boolean
+     * @param key Integer
      */
-    public boolean removeElement(ElementParams elementParams) {
-        return elements.remove(elementParams);
+    public void remove(Integer key) {
+        elements.remove(key);
     }
 
     /**
