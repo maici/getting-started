@@ -3,63 +3,86 @@ package org.opencompare.jsonParser;
 import java.util.HashMap;
 
 /**
- * Created by mahdi on 12/11/15.
+ * Handle styles parameters
  */
 public class Style {
 
-    private String backgroundColor;
-    private String color;
-    private String font;
-    private String fontStyle;
-    private int fontSize;
-    private HashMap<String, String> style;
+    private HashMap<String, String> style = new HashMap<>();
 
     public Style() {
     }
 
-    public String getBackgroundColor() {
-        return backgroundColor;
-    }
-
+    /**
+     * set background color
+     * @param backgroundColor String
+     * @throws IllegalArgumentException
+     */
     public void setBackgroundColor(String backgroundColor) {
-        this.backgroundColor = backgroundColor;
-        this.style.put("background-color", backgroundColor);
+        if(backgroundColor.matches("^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$"))
+            this.style.put("background-color", "#" + backgroundColor);
+        else throw new IllegalArgumentException("Background color must be in hexadecimal format");
     }
 
-    public String getColor() {
-        return color;
-    }
-
+    /**
+     * set text color
+     * @param color String
+     * @throws IllegalArgumentException
+     */
     public void setColor(String color) {
-        this.color = color;
-        this.style.put("color", color);
+        if(color.matches("^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$"))
+            this.style.put("color", "#" + color);
+        else throw new IllegalArgumentException("Color must be in hexadecimal format");
     }
 
-    public String getFont() {
-        return font;
-    }
-
+    /**
+     * set the text
+     * @param font String
+     */
     public void setFont(String font) {
-        this.font = font;
         this.style.put("font-family", font);
     }
 
-    public String getFontStyle() {
-        return fontStyle;
+    /**
+     * set font weight (bold/normal)
+     * @param fontWeight String
+     * @throws IllegalArgumentException
+     */
+    public void setFontWeight(String fontWeight) {
+        if(fontWeight.equals("normal") || fontWeight.equals("bold")) {
+            this.style.put("font-weight", fontWeight);
+        }
+        else throw new IllegalArgumentException("Incorrect font weight value");
     }
 
+    /**
+     * set font style (italic/none)
+     * @param fontStyle String
+     * @throws IllegalArgumentException
+     */
     public void setFontStyle(String fontStyle) {
-        this.fontStyle = fontStyle;
-        if(fontStyle == "bold") this.style.put("font-weight", fontStyle);
-        else if (fontStyle == "italic") this.style.put("font-style", fontStyle);
-        else this.style.put("font-weight", "normal");
+
+        if(fontStyle.equals("normal") || fontStyle.equals("italic")) {
+            this.style.put("font-style", fontStyle);
+        }
+        else throw new IllegalArgumentException("Incorrect font style value");
     }
 
-    public int getFontSize() {
-        return fontSize;
-    }
-
+    /**
+     * set font size in px
+     * @param fontSize int
+     * @throws IllegalArgumentException
+     */
     public void setFontSize(int fontSize) {
-        this.fontSize = fontSize;
+        if(fontSize > 0)
+            this.style.put("font-size", Integer.toString(fontSize));
+        else throw new IllegalArgumentException("font size must be positive.");
+    }
+
+    /**
+     * get styles parameters
+     * @return HashMap
+     */
+    public HashMap<String, String> getStyle() {
+        return this.style;
     }
 }
