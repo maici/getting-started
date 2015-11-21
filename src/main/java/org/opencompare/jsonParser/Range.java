@@ -1,5 +1,7 @@
 package org.opencompare.jsonParser;
 
+import java.util.Map;
+
 /**
  * Compare PCM values to a range and apply a style
  * @todo tests
@@ -39,8 +41,8 @@ public class Range implements IOperation {
      * Return the style to apply
      * @return Style
      */
-    public Style getStyle() {
-        return style;
+    public Map<String, String> getStyle() {
+        return style.getStyle();
     }
 
     /**

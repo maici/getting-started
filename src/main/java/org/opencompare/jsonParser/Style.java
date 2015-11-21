@@ -1,15 +1,31 @@
 package org.opencompare.jsonParser;
 
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Handle styles parameters
  */
 public class Style {
 
-    private HashMap<String, String> style = new HashMap<>();
+    private Map<String, String> style;
+    private String backgroundColor;
+    private String color;
+    private String font;
+    private String fontWeight;
+    private String fontStyle;
+    private int fontSize;
 
     public Style() {
+        this.style = new HashMap<>();
+    }
+
+    public String put(String key, String value) {
+        return style.put(key, value);
+    }
+
+    public String get(Object key) {
+        return style.get(key);
     }
 
     /**
@@ -19,7 +35,7 @@ public class Style {
      */
     public void setBackgroundColor(String backgroundColor) {
         if(backgroundColor.matches("^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$"))
-            this.style.put("background-color", "#" + backgroundColor);
+            this.style.put("background-color", backgroundColor);
         else throw new IllegalArgumentException("Background color must be in hexadecimal format");
     }
 
@@ -30,7 +46,7 @@ public class Style {
      */
     public void setColor(String color) {
         if(color.matches("^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$"))
-            this.style.put("color", "#" + color);
+            this.style.put("color", color);
         else throw new IllegalArgumentException("Color must be in hexadecimal format");
     }
 
@@ -79,10 +95,24 @@ public class Style {
     }
 
     /**
+     * Test if the style parameters is empty
+     * @return boolean
+     */
+    public boolean hasStyle() {
+        return style.isEmpty();
+    }
+
+    /**
      * get styles parameters
      * @return HashMap
      */
-    public HashMap<String, String> getStyle() {
+    public Map<String, String> getStyle() {
+        if(this.backgroundColor != null) this.setBackgroundColor(this.backgroundColor);
+        if(this.color != null) this.setColor(this.color);
+        if(this.font != null) this.setFont(this.font);
+        if(this.fontWeight != null) this.setFontWeight(this.fontWeight);
+        if(this.fontStyle != null) this.setFontStyle(this.fontStyle);
+        if(this.fontSize != 0) this.setFontSize(this.fontSize);
         return this.style;
     }
 }

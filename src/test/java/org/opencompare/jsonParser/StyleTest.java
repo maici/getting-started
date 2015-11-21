@@ -1,7 +1,6 @@
-package org.opencompare.jsonParseur;
+package org.opencompare.jsonParser;
 
 import org.junit.Test;
-import org.opencompare.jsonParser.Style;
 
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
@@ -14,7 +13,7 @@ public class StyleTest {
     @Test(expected = IllegalArgumentException.class)
     public void testBackgroundColor() {
         Style style = new Style();
-        style.setBackgroundColor("000000");
+        style.setBackgroundColor("#000000");
         assertTrue("Incorrect color format", style.getStyle().get("background-color").equals("#000000"));
         style.setBackgroundColor("#000000");
         fail("Incorrect color format");
@@ -23,7 +22,7 @@ public class StyleTest {
     @Test(expected = IllegalArgumentException.class)
     public void testColor() {
         Style style = new Style();
-        style.setColor("000000");
+        style.setColor("#000000");
         assertTrue("Incorrect color format", style.getStyle().get("color").equals("#000000"));
         style.setColor("abc");
         fail("Color format incorrect");

@@ -1,5 +1,7 @@
 package org.opencompare.jsonParser;
 
+import java.util.Map;
+
 /**
  * Compare PCM values and apply a style
  * @todo tests
@@ -44,10 +46,10 @@ public class Comparison implements IOperation {
 
     /**
      * Return the style to apply
-     * @return Style
+     * @return Map
      */
-    public Style getStyle() {
-        return style;
+    public Map<String, String> getStyle() {
+        return style.getStyle();
     }
 
     /**

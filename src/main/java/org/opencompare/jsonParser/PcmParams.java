@@ -1,5 +1,9 @@
 package org.opencompare.jsonParser;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
 /**
  * Represent the style parameters of the PCM
  * @todo tests
@@ -9,8 +13,14 @@ public class PcmParams {
     private String title;
     private String description;
     private boolean invert;
+    private Style style;
     private ElementsParams features;
     private ElementsParams products;
+    private List<IOperation> operations;
+
+    public PcmParams() {
+        this.operations = new ArrayList<>();
+    }
 
     /**
      * Return the PCM title
@@ -61,6 +71,30 @@ public class PcmParams {
     }
 
     /**
+     * Return the style of all the PCM
+     * @return Map
+     */
+    public Map<String, String> getStyle() {
+        return style.getStyle();
+    }
+
+    /**
+     * Set the style of all the PCM
+     * @param style Style
+     */
+    public void setStyle(Style style) {
+        this.style = style;
+    }
+
+    /**
+     * Test if the PCM has style parameters
+     * @return boolean
+     */
+    public boolean hasStyle() {
+        return this.style.hasStyle();
+    }
+
+    /**
      * Return the style parameters for the features
      * @return ElementsParams
      */
@@ -90,5 +124,31 @@ public class PcmParams {
      */
     public void setProducts(ElementsParams products) {
         this.products = products;
+    }
+
+    /**
+     * Add operation to the PCM
+     * @param operation IOperation
+     * @return boolean
+     */
+    public boolean addOperation(IOperation operation) {
+        return operations.add(operation);
+    }
+
+    /**
+     * Remove operation to the PCM
+     * @param operation IOperation
+     * @return boolean
+     */
+    public boolean removeOperation(IOperation operation) {
+        return operations.remove(operation);
+    }
+
+    /**
+     * Test if the PCM has operations
+     * @return boolean
+     */
+    public boolean hasOperations() {
+        return operations.isEmpty();
     }
 }
