@@ -124,6 +124,6 @@ public class ElementsParams {
      * @return boolean
      */
     public boolean hasOperations() {
-        return operations.isEmpty();
+        return !operations.isEmpty();
     }
 }

@@ -121,10 +121,10 @@ public class ElementParams {
 
     /**
      * Test if has cells parameters
-     * @return
+     * @return boolean
      */
-    public boolean hasCellsParams() {
-        return cells.isEmpty();
+    public boolean hasCells() {
+        return !cells.isEmpty();
     }
 
     /**
@@ -166,6 +166,6 @@ public class ElementParams {
      * @return boolean
      */
     public boolean hasOperations() {
-        return operations.isEmpty();
+        return !operations.isEmpty();
     }
 }

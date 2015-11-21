@@ -28,7 +28,6 @@ public class JsonParamsLoader {
         gsonBuilder.registerTypeAdapter(PcmParams.class, new JsonParamsDeserializer<>("pcm"));
     }
 
-
     /**
      * Read the json file and create the PcmParams Object
      * @return PcmParams

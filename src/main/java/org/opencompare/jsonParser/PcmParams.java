@@ -16,7 +16,7 @@ public class PcmParams {
     private Style style;
     private ElementsParams features;
     private ElementsParams products;
-    private List<IOperation> operations;
+    private List<Operation> operations;
 
     public PcmParams() {
         this.operations = new ArrayList<>();
@@ -127,11 +127,36 @@ public class PcmParams {
     }
 
     /**
+     * Return the list of operations
+     * @return List
+     */
+    public List<Operation> getOperations() {
+        return operations;
+    }
+
+    /**
+     * Set a list of operations
+     * @param operations List
+     */
+    public void setOperations(List<Operation> operations) {
+        this.operations = operations;
+    }
+
+    /**
+     * Return an operation
+     * @param index
+     * @return IOperation
+     */
+    public IOperation getOperation(int index) {
+        return operations.get(index);
+    }
+
+    /**
      * Add operation to the PCM
      * @param operation IOperation
      * @return boolean
      */
-    public boolean addOperation(IOperation operation) {
+    public boolean addOperation(Operation operation) {
         return operations.add(operation);
     }
 
@@ -140,7 +165,7 @@ public class PcmParams {
      * @param operation IOperation
      * @return boolean
      */
-    public boolean removeOperation(IOperation operation) {
+    public boolean removeOperation(Operation operation) {
         return operations.remove(operation);
     }
 
@@ -149,6 +174,6 @@ public class PcmParams {
      * @return boolean
      */
     public boolean hasOperations() {
-        return operations.isEmpty();
+        return !operations.isEmpty();
     }
 }

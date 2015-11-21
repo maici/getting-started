@@ -6,12 +6,23 @@ import java.util.Map;
  * Compare PCM values and apply a style
  * @todo tests
  */
-public class Comparison implements IOperation {
+public class Comparison<T extends Number> implements IOperation<T> {
 
     private String operation;
-    private int operand;
-    private int value;
+    private long operand;
     private Style style;
+
+    /**
+     * Constructor
+     * @param operation String
+     * @param operand long
+     * @param style Style
+     */
+    public Comparison(String operation, long operand, Style style) {
+        setOperation(operation);
+        this.operand = operand;
+        this.style = style;
+    }
 
     /**
      * Set the comparison operation
@@ -26,22 +37,6 @@ public class Comparison implements IOperation {
                 operation.equals("="))
             this.operation = operation;
         else throw new IllegalArgumentException("Invalid comparison operation");
-    }
-
-    /**
-     * Set the comparison operand value
-     * @param operand int
-     */
-    public void setOperand(int operand) {
-        this.operand = operand;
-    }
-
-    /**
-     * Set the value to compare
-     * @param value int
-     */
-    public void setValue(int value) {
-        this.value = value;
     }
 
     /**
@@ -65,24 +60,24 @@ public class Comparison implements IOperation {
      * @return boolean
      */
     @Override
-    public boolean execute() {
+    public boolean execute(T value) {
         boolean res = false;
 
         switch (this.operation) {
             case "<":
-                if(this.operand < this.value) res = true;
+                if(value.floatValue() < this.operand) res = true;
                 break;
             case "<=":
-                if(this.operand <= this.value) res = true;
+                if(value.floatValue() <= this.operand) res = true;
                 break;
             case ">":
-                if(this.operand > this.value) res = true;
+                if(value.floatValue() > this.operand) res = true;
                 break;
             case ">=":
-                if(this.operand >= this.value) res = true;
+                if(value.floatValue() >= this.operand) res = true;
                 break;
             case "=":
-                if(this.operand == this.value) res = true;
+                if(value.floatValue() == this.operand) res = true;
                 break;
             default: res = false;
         }
