@@ -35,16 +35,37 @@ public class ElementsParams {
         this.style = style;
     }
 
-    public List<ElementParams> getElements() {
-        return elements;
-    }
-
     /**
      * Test if the elements of the PCM have style parameters
      * @return boolean
      */
     public boolean hasStyle() {
         return this.style.hasStyle();
+    }
+
+    /**
+     * Return all the elements
+     * @return List
+     */
+    public List<ElementParams> getElements() {
+        return elements;
+    }
+
+    /**
+     * Set a list of ElementParam
+     * @param elements List
+     */
+    public void setElements(List<ElementParams> elements) {
+        this.elements = elements;
+    }
+
+    /**
+     * Return a element
+     * @param index int
+     * @return ElementParam
+     */
+    public ElementParams getElement(int index) {
+        return elements.get(index);
     }
 
     /**
@@ -62,6 +83,22 @@ public class ElementsParams {
      */
     public void removeElementParams(ElementParams elementParams) {
         elements.remove(elementParams);
+    }
+
+    /**
+     * Return all operations
+     * @return List
+     */
+    public List<IOperation> getOperations() {
+        return operations;
+    }
+
+    /**
+     * Set a list of operations
+     * @param operations List
+     */
+    public void setOperations(List<IOperation> operations) {
+        this.operations = operations;
     }
 
     /**

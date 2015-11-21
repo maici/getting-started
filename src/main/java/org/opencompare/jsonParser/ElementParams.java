@@ -9,8 +9,8 @@ import java.util.Map;
  * @todo tests
  */
 public class ElementParams {
-    private double id;
-    private double order;
+    private long id;
+    private long order;
     private Style style;
     private List<CellParams> cells;
     private List<IOperation> operations;
@@ -22,33 +22,33 @@ public class ElementParams {
 
     /**
      * Return the element id
-     * @return double
+     * @return long
      */
-    public double getId() {
+    public long getId() {
         return id;
     }
 
     /**
      * Set the element id
-     * @return double
+     * @return long
      */
-    public void setId(double id) {
+    public void setId(long id) {
         this.id = id;
     }
 
     /**
-     * Return the order of an element (feisEmptyature/product)
-     * @return double
+     * Return the order of an element (feature/product)
+     * @return long
      */
-    public double getOrder() {
+    public long getOrder() {
         return order;
     }
 
     /**
      * Set the order of an element (feature/product)
-     * @param order double
+     * @param order long
      */
-    public void setOrder(int order) {
+    public void setOrder(long order) {
         this.order = order;
     }
 
@@ -77,6 +77,31 @@ public class ElementParams {
     }
 
     /**
+     * Return all the cells
+     * @return list
+     */
+    public List<CellParams> getCells() {
+        return cells;
+    }
+
+    /**
+     * Set a list of cells
+     * @param cells List
+     */
+    public void setCells(List<CellParams> cells) {
+        this.cells = cells;
+    }
+
+    /**
+     * Return cell parameters
+     * @param index int
+     * @return CellParams
+     */
+    public CellParams getCell(int index) {
+        return cells.get(index);
+    }
+
+    /**
      * Add style to a cell of the element (feature/product)
      * @param cellParams CellParams
      * @return boolean
@@ -100,6 +125,22 @@ public class ElementParams {
      */
     public boolean hasCellsParams() {
         return cells.isEmpty();
+    }
+
+    /**
+     * Return all the operations
+     * @return list
+     */
+    public List<IOperation> getOperations() {
+        return operations;
+    }
+
+    /**
+     * Set a list of operations
+     * @param operations
+     */
+    public void setOperations(List<IOperation> operations) {
+        this.operations = operations;
     }
 
     /**

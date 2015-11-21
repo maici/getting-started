@@ -8,22 +8,22 @@ import java.util.Map;
  */
 public class CellParams {
 
-    private double id;
+    private long id;
     private Style style;
 
     /**
      * Return the cell id
-     * @return double
+     * @return long
      */
-    public double getId() {
+    public long getId() {
         return id;
     }
 
     /**
      * Set the cell id
-     * @param id double
+     * @param id long
      */
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 

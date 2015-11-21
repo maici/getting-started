@@ -20,7 +20,10 @@
           },
           "cells": [
             {
-              "id": "1"
+              "id": "1",
+              "style": {
+                "font": "CellFont"
+              }
             }
           ]
         }
