@@ -6,7 +6,7 @@ import java.util.Map;
  * Compare PCM values and apply a style
  * @todo tests
  */
-public class Comparison<T extends Number> implements IOperation<T> {
+public class Comparison implements IOperation<Number> {
 
     private String operation;
     private long operand;
@@ -60,7 +60,7 @@ public class Comparison<T extends Number> implements IOperation<T> {
      * @return boolean
      */
     @Override
-    public boolean execute(T value) {
+    public boolean execute(Number value) {
         boolean res = false;
 
         switch (this.operation) {

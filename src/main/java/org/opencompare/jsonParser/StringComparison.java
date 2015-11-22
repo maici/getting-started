@@ -5,7 +5,7 @@ import java.util.Map;
 /**
  * Compare string values to PCM values and apply a style
  */
-public class StringComparison<T extends String> implements IOperation<T> {
+public class StringComparison implements IOperation<String> {
 
     private String string;
     private Style style;
@@ -26,7 +26,7 @@ public class StringComparison<T extends String> implements IOperation<T> {
      * @return boolean
      */
     @Override
-    public boolean execute(T value) {
+    public boolean execute(String value) {
         if(string.equals(value)) return true;
         return false;
     }

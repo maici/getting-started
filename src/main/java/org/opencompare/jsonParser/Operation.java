@@ -11,7 +11,7 @@ public class Operation<T> implements IOperation<T>{
     private String type;
     private Map<String, String> values;
     private Style style;
-    private IOperation<T> operation;
+    private IOperation operation;
     private int value;
 
     public Operation() {
@@ -25,11 +25,11 @@ public class Operation<T> implements IOperation<T>{
     public IOperation operationFactory() {
         switch (type) {
             case "comparison":
-                return new Comparison<>(values.get("operation"), Integer.valueOf(values.get("operand")), style);
+                return new Comparison(values.get("operation"), Integer.valueOf(values.get("operand")), style);
             case "range":
-                return new Range<>(Integer.valueOf(values.get("minValue")), Integer.valueOf(values.get("maxValue")), style);
+                return new Range(Integer.valueOf(values.get("minValue")), Integer.valueOf(values.get("maxValue")), style);
             case "string-comparison":
-                return new StringComparison<>(values.get("string"), style);
+                return new StringComparison(values.get("string"), style);
             default:
                 throw new IllegalArgumentException("Incorrect operation type");
         }

@@ -6,7 +6,7 @@ import java.util.Map;
  * Compare PCM values to a range and apply a style
  * @todo tests
  */
-public class Range<T extends Number> implements IOperation<T> {
+public class Range implements IOperation<Number> {
 
     private long minValue;
     private long maxValue;
@@ -45,7 +45,7 @@ public class Range<T extends Number> implements IOperation<T> {
      * @return boolean
      */
     @Override
-    public boolean execute(T value) {
+    public boolean execute(Number value) {
         if(value.longValue() >= this.minValue && value.longValue() < this.maxValue) return true;
         return false;
     }
