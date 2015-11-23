@@ -18,12 +18,13 @@ public class JsonParamsLoaderTest {
         System.out.println(pcmParams.isInvert());
         System.out.println(pcmParams.getStyle());
         System.out.println(pcmParams.getFeatures().getStyle());
+        System.out.println(pcmParams.getFeatures().hasStyle());
         System.out.println(pcmParams.getFeatures().getElement(0).getStyle());
         System.out.println(pcmParams.getFeatures().getElement(0).getCell(0).getStyle());
         System.out.println(pcmParams.hasOperations());
         System.out.println(pcmParams.getOperation(0).execute(10));
         System.out.println(pcmParams.getOperation(1).execute(9.9));
-        System.out.println(pcmParams.getOperation(2).execute(10));
+        System.out.println(pcmParams.getOperation(2).execute("test"));
     }
 
 }
