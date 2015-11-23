@@ -5,7 +5,6 @@
  */
 
 package org.opencompare.cssGenerator;
-import com.projetloki.genesis.CssBuilder;
 import com.projetloki.genesis.CssModule;
 import com.projetloki.genesis.Genesis;
 import java.io.File;
@@ -15,24 +14,34 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.opencompare.jsonParser.Style;
 
 /**
- *
- * @author Florian
+ * Pcm css builder
  */ 
 public class PcmCssBuilder{
     
     private Collection<CssModule> modules;
     
+    /**
+     * Constructor
+     */
     public PcmCssBuilder(){
         this.modules = new ArrayList<>();
     }
     
-    public void addModule(String property, Map<String, String> style){
-        modules.add(new PcmCssModule(property, style).getModule());
+    /**
+     * Create a module and add it into the list
+     * @param classe Name of the css classe of the module
+     * @param properties List of the modified properties and their value
+     */
+    public void addModule(String classe, Map<String, String> properties){
+        modules.add(new PcmCssModule(classe, properties).getModule());
     }
     
+    /**
+     * Create css file with all modules defined
+     * @param name Name of the css generated file
+     */
     public void generateCss(String name) {
         Genesis.Builder genesis = Genesis.builder();
         for(CssModule mod: modules){

@@ -13,19 +13,27 @@ import java.io.IOException;
 import java.util.Map;
 
 /**
- *
- * @author Florian
+ * Css module which contains is composed by a classe and the properties which are modified
  */
 public class PcmCssModule {
     
     private String classe;
     private Map<String, String> properties;
     
+    /**
+     * 
+     * @param classe Name of the modified classe
+     * @param properties List of the modified properties and their value
+     */
     public PcmCssModule(String classe, Map<String, String> properties){
         this.classe = classe;
         this.properties = properties;
     }
 
+    /**
+     * Configure a CssModule Object
+     * @return CssModule Object
+     */
     public CssModule getModule(){
         return new CssModule() {
 
