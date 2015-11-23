@@ -8,16 +8,41 @@ package org.opencompare.cssGenerator;
 
 import com.projetloki.genesis.CssBuilder;
 import com.projetloki.genesis.CssModule;
+import com.projetloki.genesis.Properties;
 import java.io.IOException;
+import java.util.Map;
 
 /**
- *
- * @author Florian
+ * Css module which contains is composed by a classe and the properties which are modified
  */
-public class PcmCssModule implements CssModule {
+public class PcmCssModule {
+    
+    private String classe;
+    private Map<String, String> properties;
+    
+    /**
+     * 
+     * @param classe Name of the modified classe
+     * @param properties List of the modified properties and their value
+     */
+    public PcmCssModule(String classe, Map<String, String> properties){
+        this.classe = classe;
+        this.properties = properties;
+    }
 
-    @Override
-    public void configure(CssBuilder cb) throws IOException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    /**
+     * Configure a CssModule Object
+     * @return CssModule Object
+     */
+    public CssModule getModule(){
+        return new CssModule() {
+
+            @Override
+            public void configure(CssBuilder out) throws IOException {
+                for(String property: properties.keySet()){
+                    out.addRule(classe, Properties.builder().set(property, properties.get(property)));
+                }
+            }
+        };
     }
 }

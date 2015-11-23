@@ -5,19 +5,53 @@
  */
 
 package org.opencompare.cssGenerator;
-import com.projetloki.genesis.*;
+import com.projetloki.genesis.CssModule;
+import com.projetloki.genesis.Genesis;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
- *
- * @author Florian
- */
-public class PcmCssBuilder {
+ * Pcm css builder
+ */ 
+public class PcmCssBuilder{
     
-    public void addModule(String property, Style style){
-        
+    private Collection<CssModule> modules;
+    
+    /**
+     * Constructor
+     */
+    public PcmCssBuilder(){
+        this.modules = new ArrayList<>();
     }
     
-    public void generateCss() {
-        
+    /**
+     * Create a module and add it into the list
+     * @param classe Name of the css classe of the module
+     * @param properties List of the modified properties and their value
+     */
+    public void addModule(String classe, Map<String, String> properties){
+        modules.add(new PcmCssModule(classe, properties).getModule());
+    }
+    
+    /**
+     * Create css file with all modules defined
+     * @param name Name of the css generated file
+     */
+    public void generateCss(String name) {
+        Genesis.Builder genesis = Genesis.builder();
+        for(CssModule mod: modules){
+            genesis.install(mod);
+        }
+        try {
+            genesis.build().writeCssFile(new File(name));
+        } catch (IOException ex) {
+            Logger.getLogger(PcmCssBuilder.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }
 }
