@@ -8,15 +8,15 @@ import java.lang.reflect.Type;
  * Deserialize json parameters objects
  * @todo tests
  */
-public class JSONParamsDeserializer<T> implements JsonDeserializer<T> {
+public class JsonParamsDeserializer<T> implements JsonDeserializer<T> {
 
     private String name;
 
     /**
      * Constructor
-     * @param name String object name
+     * @param name String json object name
      */
-    public JSONParamsDeserializer(String name) {
+    public JsonParamsDeserializer(String name) {
         this.name = name;
     }
 

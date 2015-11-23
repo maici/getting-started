@@ -3,6 +3,9 @@ package org.opencompare.jsonParser;
 import com.google.gson.GsonBuilder;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 
 /**
  * Json parameters loader
@@ -10,26 +13,32 @@ import java.io.File;
  */
 public class JsonParamsLoader {
 
-    private File json;
+    private String json;
     private GsonBuilder gsonBuilder;
 
-    public JsonParamsLoader(File json) {
-        this.json = json;
+    /**
+     * Constructor
+     * @param jsonFile File
+     * @throws IOException
+     */
+    public JsonParamsLoader(File jsonFile) throws IOException {
+        this.json = new String(Files.readAllBytes(jsonFile.toPath()), StandardCharsets.UTF_8);
         this.gsonBuilder = new GsonBuilder();
 
-        gsonBuilder.registerTypeAdapter(PcmParams.class, new JSONParamsDeserializer<>("pcm"));
-        gsonBuilder.registerTypeAdapter(ElementsParams.class, new JSONParamsDeserializer<>("features"));
-        gsonBuilder.registerTypeAdapter(ElementsParams.class, new JSONParamsDeserializer<>("products"));
-        gsonBuilder.registerTypeAdapter(ElementParams.class, new JSONParamsDeserializer<>("feature"));
-        gsonBuilder.registerTypeAdapter(ElementParams.class, new JSONParamsDeserializer<>("product"));
-        gsonBuilder.registerTypeAdapter(Comparison.class, new JSONParamsDeserializer<>("comparison"));
-        gsonBuilder.registerTypeAdapter(Range.class, new JSONParamsDeserializer<>("range"));
-        gsonBuilder.registerTypeAdapter(Style.class, new JSONParamsDeserializer<>("style"));
+        gsonBuilder.registerTypeAdapter(PcmParams.class, new JsonParamsDeserializer<>("pcm"));
     }
 
-
-    public PcmParams load(){
-        //@todo lecture du fichier json
-        return new PcmParams();
+    /**
+     * Read the json file and create the PcmParams Object
+     * @return PcmParams
+     * @throws Exception
+     */
+    public PcmParams load() throws Exception {
+        try {
+            return gsonBuilder.create().fromJson(this.json, PcmParams.class);
+        }
+        catch (Exception e) {
+            throw new Exception("Incorrect json PCM parameters file");
+        }
     }
 }

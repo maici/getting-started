@@ -1,7 +1,6 @@
 package org.opencompare.jsonParser;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -12,20 +11,20 @@ import java.util.Map;
 public class ElementsParams {
 
     private Style style;
-    private Map<Integer,ElementParams> elements;
+    private List<ElementParams> elements;
     private List<IOperation> operations;
 
     public ElementsParams() {
-        this.elements = new HashMap<>();
+        this.elements = new ArrayList<>();
         this.operations = new ArrayList<>();
     }
 
     /**
      * Return the style of the element (features/products)
-     * @return Style
+     * @return Map
      */
-    public Style getStyle() {
-        return style;
+    public Map<String, String> getStyle() {
+        return style.getStyle();
     }
 
     /**
@@ -37,21 +36,69 @@ public class ElementsParams {
     }
 
     /**
+     * Test if the elements of the PCM have style parameters
+     * @return boolean
+     */
+    public boolean hasStyle() {
+        return this.style.hasStyle();
+    }
+
+    /**
+     * Return all the elements
+     * @return List
+     */
+    public List<ElementParams> getElements() {
+        return elements;
+    }
+
+    /**
+     * Set a list of ElementParam
+     * @param elements List
+     */
+    public void setElements(List<ElementParams> elements) {
+        this.elements = elements;
+    }
+
+    /**
+     * Return a element
+     * @param index int
+     * @return ElementParam
+     */
+    public ElementParams getElement(int index) {
+        return elements.get(index);
+    }
+
+    /**
      * Add style parameters of an element (feature/product)
-     * @param key Integer
      * @param elementParams ElementParams
      * @return boolean
      */
-    public ElementParams put(Integer key, ElementParams elementParams) {
-        return elements.put(key, elementParams);
+    public boolean addElementParams(ElementParams elementParams) {
+        return elements.add(elementParams);
     }
 
     /**
      * Remove style parameters of an element (feature/product)
-     * @param key Integer
+     * @param elementParams ElementParams
      */
-    public void remove(Integer key) {
-        elements.remove(key);
+    public void removeElementParams(ElementParams elementParams) {
+        elements.remove(elementParams);
+    }
+
+    /**
+     * Return all operations
+     * @return List
+     */
+    public List<IOperation> getOperations() {
+        return operations;
+    }
+
+    /**
+     * Set a list of operations
+     * @param operations List
+     */
+    public void setOperations(List<IOperation> operations) {
+        this.operations = operations;
     }
 
     /**
@@ -70,5 +117,13 @@ public class ElementsParams {
      */
     public boolean removeOperation(IOperation iOperation) {
         return operations.remove(iOperation);
+    }
+
+    /**
+     * Test if has operations
+     * @return boolean
+     */
+    public boolean hasOperations() {
+        return !operations.isEmpty();
     }
 }

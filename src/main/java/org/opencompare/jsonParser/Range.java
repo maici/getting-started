@@ -1,46 +1,35 @@
 package org.opencompare.jsonParser;
 
+import java.util.Map;
+
 /**
  * Compare PCM values to a range and apply a style
  * @todo tests
  */
-public class Range implements IOperation {
+public class Range implements IOperation<Number> {
 
-    private int minValue;
-    private int maxValue;
-    private int value;
+    private long minValue;
+    private long maxValue;
     private Style style;
 
     /**
-     * Set the minimal boundary value
-     * @param minValue int
+     * Constructor
+     * @param minValue long
+     * @param maxValue long
+     * @param style Style
      */
-    public void setMinValue(int minValue) {
+    public Range(long minValue, long maxValue, Style style) {
         this.minValue = minValue;
-    }
-
-    /**
-     * Set the maximal boundary value
-     * @param maxValue
-     */
-    public void setMaxValue(int maxValue) {
         this.maxValue = maxValue;
-    }
-
-    /**
-     * Set the value to compare
-     * @param value
-     */
-    public void setValue(int value) {
-        this.value = value;
+        this.style = style;
     }
 
     /**
      * Return the style to apply
      * @return Style
      */
-    public Style getStyle() {
-        return style;
+    public Map<String, String> getStyle() {
+        return style.getStyle();
     }
 
     /**
@@ -56,8 +45,8 @@ public class Range implements IOperation {
      * @return boolean
      */
     @Override
-    public boolean execute() {
-        if(this.value >= this.minValue && this.value < this.maxValue) return true;
+    public boolean execute(Number value) {
+        if(value.longValue() >= this.minValue && value.longValue() < this.maxValue) return true;
         return false;
     }
 }

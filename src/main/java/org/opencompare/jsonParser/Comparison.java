@@ -1,15 +1,28 @@
 package org.opencompare.jsonParser;
 
+import java.util.Map;
+
 /**
  * Compare PCM values and apply a style
  * @todo tests
  */
-public class Comparison implements IOperation {
+public class Comparison implements IOperation<Number> {
 
     private String operation;
-    private int operand;
-    private int value;
+    private long operand;
     private Style style;
+
+    /**
+     * Constructor
+     * @param operation String
+     * @param operand long
+     * @param style Style
+     */
+    public Comparison(String operation, long operand, Style style) {
+        setOperation(operation);
+        this.operand = operand;
+        this.style = style;
+    }
 
     /**
      * Set the comparison operation
@@ -27,27 +40,11 @@ public class Comparison implements IOperation {
     }
 
     /**
-     * Set the comparison operand value
-     * @param operand int
-     */
-    public void setOperand(int operand) {
-        this.operand = operand;
-    }
-
-    /**
-     * Set the value to compare
-     * @param value int
-     */
-    public void setValue(int value) {
-        this.value = value;
-    }
-
-    /**
      * Return the style to apply
-     * @return Style
+     * @return Map
      */
-    public Style getStyle() {
-        return style;
+    public Map<String, String> getStyle() {
+        return style.getStyle();
     }
 
     /**
@@ -63,24 +60,24 @@ public class Comparison implements IOperation {
      * @return boolean
      */
     @Override
-    public boolean execute() {
+    public boolean execute(Number value) {
         boolean res = false;
 
         switch (this.operation) {
             case "<":
-                if(this.operand < this.value) res = true;
+                if(value.floatValue() < this.operand) res = true;
                 break;
             case "<=":
-                if(this.operand <= this.value) res = true;
+                if(value.floatValue() <= this.operand) res = true;
                 break;
             case ">":
-                if(this.operand > this.value) res = true;
+                if(value.floatValue() > this.operand) res = true;
                 break;
             case ">=":
-                if(this.operand >= this.value) res = true;
+                if(value.floatValue() >= this.operand) res = true;
                 break;
             case "=":
-                if(this.operand == this.value) res = true;
+                if(value.floatValue() == this.operand) res = true;
                 break;
             default: res = false;
         }
