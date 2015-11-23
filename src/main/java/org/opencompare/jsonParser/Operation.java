@@ -12,24 +12,25 @@ public class Operation<T> implements IOperation<T>{
     private Map<String, String> values;
     private Style style;
     private IOperation operation;
-    private int value;
 
-    public Operation() {
+    public Operation() throws Exception {
         this.values = new HashMap<>();
     }
 
     /**
-     * Create the correct operation
-     * @return IOperation
+     * Instantiate the correct operation
      */
-    public IOperation operationFactory() {
+    public void operationFactory() {
         switch (type) {
             case "comparison":
-                return new Comparison(values.get("operation"), Integer.valueOf(values.get("operand")), style);
+                operation = new Comparison(values.get("operation"), Integer.valueOf(values.get("operand")), style);
+                break;
             case "range":
-                return new Range(Integer.valueOf(values.get("minValue")), Integer.valueOf(values.get("maxValue")), style);
+                operation = new Range(Integer.valueOf(values.get("minValue")), Integer.valueOf(values.get("maxValue")), style);
+                break;
             case "string-comparison":
-                return new StringComparison(values.get("string"), style);
+                operation = new StringComparison(values.get("string"), style);
+                break;
             default:
                 throw new IllegalArgumentException("Incorrect operation type");
         }
@@ -42,7 +43,10 @@ public class Operation<T> implements IOperation<T>{
      */
     @Override
     public boolean execute(T value) {
-        if(operation == null ) this.operation = operationFactory();
+        if(operation == null ) operationFactory();
+        if(value instanceof String && operation instanceof Comparison) return false;
+        if(value instanceof String && operation instanceof Range) return false;
+        if(value instanceof Number && operation instanceof StringComparison) return false;
         return operation.execute(value);
     }
 
