@@ -22,7 +22,7 @@ public class PcmCssModuleTest {
 
     @Test
     public void testGetModule() throws IOException, Exception {
-        JsonParamsLoader jsonParamsLoader = new JsonParamsLoader(new File("./src/test/java/org/opencompare/jsonParser/resources/params1.json"));
+        JsonParamsLoader jsonParamsLoader = new JsonParamsLoader(new File("./src/test/java/org/opencompare/jsonParser/resources/example.json"));
         PcmParams pcmParams = jsonParamsLoader.load();
         PcmCssBuilder builder = new PcmCssBuilder();
         builder.addModule(".pcm", pcmParams.getStyle());

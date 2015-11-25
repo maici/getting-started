@@ -1,0 +1,58 @@
+{
+  "pcm": {
+    "title":  "pcmTest",
+    "description": "pcmTest description",
+    "invert": "false",
+    "style": {
+      "color": "#123123"
+    },
+    "operations": [
+      {
+        "type": "comparison",
+        "values": {
+          "operation": "<",
+          "operand": "200"
+        },
+        "style": {}
+      },
+      {
+        "type": "range",
+        "values": {
+          "minValue": "0",
+          "maxValue": "10"
+        },
+        "style": {}
+      },
+      {
+        "type": "string-comparison",
+        "values": {
+          "string": "test"
+        },
+        "style": {}
+      }
+    ],
+    "features": {
+      "style": {
+        "font": "Arial",
+        "backgroundColor": "#000000"
+      },
+      "elements": [
+        {
+          "id": "1",
+          "order": "1",
+          "style": {
+            "color": "#456789"
+          },
+          "cells": [
+            {
+              "id": "1",
+              "style": {
+                "font": "CellFont"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
