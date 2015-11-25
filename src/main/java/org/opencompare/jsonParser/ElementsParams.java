@@ -1,6 +1,7 @@
 package org.opencompare.jsonParser;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -11,11 +12,11 @@ import java.util.Map;
 public class ElementsParams {
 
     private Style style;
-    private List<ElementParams> elements;
+    private Map<String, ElementParams> elements;
     private List<IOperation> operations;
 
     public ElementsParams() {
-        this.elements = new ArrayList<>();
+        this.elements = new HashMap<>();
         this.operations = new ArrayList<>();
     }
 
@@ -44,45 +45,55 @@ public class ElementsParams {
     }
 
     /**
-     * Return all the elements
-     * @return List
+     * Check if an element exist
+     * @param key String
+     * @return boolean
      */
-    public List<ElementParams> getElements() {
+    public boolean containsElement(String key) {
+        return elements.containsKey(key);
+    }
+
+    /**
+     * Return all the elements
+     * @return Map
+     */
+    public Map<String, ElementParams> getElements() {
         return elements;
     }
 
     /**
      * Set a list of ElementParam
-     * @param elements List
+     * @param elements Map
      */
-    public void setElements(List<ElementParams> elements) {
+    public void setElements(HashMap<String, ElementParams> elements) {
         this.elements = elements;
     }
 
     /**
      * Return a element
-     * @param index int
+     * @param key String
      * @return ElementParam
      */
-    public ElementParams getElement(int index) {
-        return elements.get(index);
+    public ElementParams getElement(String key) {
+        return elements.get(key);
     }
 
     /**
      * Add style parameters of an element (feature/product)
+     * @param key String
      * @param elementParams ElementParams
-     * @return boolean
+     * @return ElementParams
      */
-    public boolean addElementParams(ElementParams elementParams) {
-        return elements.add(elementParams);
+    public ElementParams addElementParams(String key, ElementParams elementParams) {
+        return elements.put(key, elementParams);
     }
 
     /**
      * Remove style parameters of an element (feature/product)
-     * @param elementParams ElementParams
+     * @param id String
      */
-    public void removeElementParams(ElementParams elementParams) {
-        elements.remove(elementParams);
+    public void removeElementParams(String id) {
+        elements.remove(id);
     }
 
     /**

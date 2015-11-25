@@ -95,6 +95,14 @@ public class PcmParams {
     }
 
     /**
+     * Check if there is features parameters
+     * @return boolean
+     */
+    public boolean hasFeatures() {
+        return this.features != null;
+    }
+
+    /**
      * Return the style parameters for the features
      * @return ElementsParams
      */
@@ -108,6 +116,14 @@ public class PcmParams {
      */
     public void setFeatures(ElementsParams features) {
         this.features = features;
+    }
+
+    /**
+     * Check if there is products parameters
+     * @return boolean
+     */
+    public boolean hasProducts() {
+        return this.products != null;
     }
 
     /**

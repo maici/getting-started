@@ -38,6 +38,7 @@ public class JsonParamsLoader {
             return gsonBuilder.create().fromJson(this.json, PcmParams.class);
         }
         catch (Exception e) {
+            e.printStackTrace();
             throw new Exception("Incorrect json PCM parameters file");
         }
     }

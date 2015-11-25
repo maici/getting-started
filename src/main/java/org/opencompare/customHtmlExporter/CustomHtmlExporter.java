@@ -24,12 +24,10 @@ public class CustomHtmlExporter extends HTMLExporter {
     private PcmParams pcmParams;
     private PcmCssBuilder pcmCssBuilder;
     private String htmlTemplate;
+    private String cssFile;
     private Element body;
     private Element tr;
     private Document.OutputSettings settings;
-    private int productIndex = 0;
-    private int featureIndex = 0;
-    private int cellIndex = 0;
     private PrintWriter writer;
 
     public CustomHtmlExporter() {
@@ -38,15 +36,17 @@ public class CustomHtmlExporter extends HTMLExporter {
     }
 
     public boolean export(PCM pcm, PcmParams pcmParams) {
-        String cssFile = "style.css";
+        String path = "./out";
+        cssFile = "style.css";
         File templateFile = new File("./template/template.html");
         this.pcmParams = pcmParams;
         try {
             htmlTemplate = Files.toString(templateFile, StandardCharsets.UTF_8);
             htmlTemplate = toHTML(pcm);
-            writer = new PrintWriter("pcm.html", "UTF-8");
+            new File(path).mkdir();
+            writer = new PrintWriter(path + "/pcm.html", "UTF-8");
             writer.write(htmlTemplate);
-            pcmCssBuilder.generateCss(cssFile);
+            pcmCssBuilder.generateCss(path + "/" + cssFile);
             return true;
         } catch (Exception e) {
             e.printStackTrace();
@@ -62,6 +62,9 @@ public class CustomHtmlExporter extends HTMLExporter {
         body = document.body();
         document.head().select("title").first().text(pcmParams.getTitle());
         pcm.accept(this);
+        if(pcmCssBuilder.hasModules()) {
+            document.head().append("<link rel=\"stylesheet\" href=" + cssFile + ">");
+        }
         return document.outputSettings(settings).outerHtml();
     }
 
@@ -77,23 +80,22 @@ public class CustomHtmlExporter extends HTMLExporter {
         }
 
         tr = table.appendElement("tr");
-        if(pcmParams.getFeatures().hasStyle()) {
+        tr.appendElement("th").text("Product");
+        if(pcmParams.hasFeatures() && pcmParams.getFeatures().hasStyle()) {
             pcmCssBuilder.addModule(".features", pcmParams.getFeatures().getStyle());
             tr.addClass("features");
         }
         for(Feature feature: pcm.getConcreteFeatures()) {
             feature.accept(this);
-            featureIndex++;
         }
 
-        if(pcmParams.getProducts().hasStyle()) {
+        if(pcmParams.hasProducts() && pcmParams.getProducts().hasStyle()) {
             pcmCssBuilder.addModule(".products", pcmParams.getProducts().getStyle());
             tr.addClass("products");
         }
         for (Product product : pcm.getProducts()) {
             tr = table.appendElement("tr");
             product.accept(this);
-            productIndex++;
         }
     }
 
@@ -102,8 +104,10 @@ public class CustomHtmlExporter extends HTMLExporter {
     public void visit(Feature feature) {
         Element td = tr.appendElement("th").text(feature.getName());
 
-        if(pcmParams.getFeatures().getElement(featureIndex).hasStyle()) {
-            pcmCssBuilder.addModule("." + feature.getName(), pcmParams.getFeatures().getElement(featureIndex).getStyle());
+        if(pcmParams.hasFeatures() &&
+                pcmParams.getFeatures().containsElement(feature.getName()) &&
+                pcmParams.getFeatures().getElement(feature.getName()).hasStyle()) {
+            pcmCssBuilder.addModule("." + feature.getName(), pcmParams.getFeatures().getElement(feature.getName()).getStyle());
             td.addClass(feature.getName());
         }
     }
@@ -112,15 +116,15 @@ public class CustomHtmlExporter extends HTMLExporter {
     //@todo export htmlTemplate
     public void visit(Product product) {
         tr.appendElement("th").text(product.getName());
-        cellIndex = 0;
 
-        if(pcmParams.getProducts().getElement(productIndex).hasStyle()) {
-            pcmCssBuilder.addModule("." + product.getName(), pcmParams.getProducts().getElement(productIndex).getStyle());
+        if(pcmParams.hasProducts() &&
+                pcmParams.getProducts().containsElement(product.getName()) &&
+                pcmParams.getProducts().getElement(product.getName()).hasStyle()) {
+            pcmCssBuilder.addModule("." + product.getName(), pcmParams.getProducts().getElement(product.getName()).getStyle());
             tr.addClass(product.getName());
         }
         for(Cell cell: product.getCells()) {
             cell.accept(this);
-            cellIndex++;
         }
     }
 
@@ -128,11 +132,13 @@ public class CustomHtmlExporter extends HTMLExporter {
     //@todo export htmlTemplate
     public void visit(Cell cell) {
         Element td = tr.appendElement("td").text(cell.getContent());
-        String cssClass;
-        if(pcmParams.getProducts().getElement(productIndex).getCell(cellIndex).hasStyle()) {
-            cssClass = cell.getFeature().getName() + "_" + cell.getProduct().getName();
-            pcmCssBuilder.addModule("." + cssClass, pcmParams.getProducts().getElement(productIndex).getCell(cellIndex).getStyle());
-            td.addClass(cssClass);
+        String cellId = cell.getFeature().getName() + "_";
+        if(pcmParams.hasProducts() &&
+                pcmParams.getProducts().containsElement(cell.getProduct().getName()) &&
+                pcmParams.getProducts().getElement(cell.getProduct().getName()).containsCell(cellId) &&
+                pcmParams.getProducts().getElement(cell.getProduct().getName()).getCell(cellId).hasStyle()) {
+            pcmCssBuilder.addModule("." + cellId, pcmParams.getProducts().getElement(cell.getProduct().getName()).getCell(cellId).getStyle());
+            td.addClass(cellId);
         }
     }
 }

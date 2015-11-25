@@ -37,21 +37,23 @@
         "backgroundColor": "#000000"
       },
       "elements": [
-        {
-          "id": "1",
-          "order": "1",
-          "style": {
-            "color": "#456789"
-          },
-          "cells": [
-            {
-              "id": "1",
-              "style": {
-                "font": "CellFont"
-              }
-            }
-          ]
-        }
+        [
+          "feature1",
+          {
+            "order": "1",
+            "style": {
+              "color": "#456789"
+            },
+            "cells": [
+              [
+                "feature1_cell1",
+                {
+                  "font": "CellFont"
+                }
+              ]
+            ]
+          }
+        ]
       ]
     }
   }
