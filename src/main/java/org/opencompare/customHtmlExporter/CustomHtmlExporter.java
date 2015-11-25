@@ -1,6 +1,9 @@
 package org.opencompare.customHtmlExporter;
 
 import com.google.common.io.Files;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 import org.opencompare.api.java.*;
 import org.opencompare.api.java.io.HTMLExporter;
 import org.opencompare.cssGenerator.PcmCssBuilder;
@@ -17,19 +20,24 @@ public class CustomHtmlExporter extends HTMLExporter {
 
     private PcmParams pcmParams;
     private PcmCssBuilder pcmCssBuilder = new PcmCssBuilder();
+    private File templateFile;
     private String CssFile;
-    private File template;
-    private String html;
+    private String htmlTemplate;
+    private Document document;
+    private Element body;
+    private Element tr;
+    private Document.OutputSettings settings;
+
 
     public boolean export(PCMContainer container, File json) {
         CssFile = "pcm.css";
         JsonParamsLoader jsonParamsLoader = null;
-        template = new File("./src/main/java/org/opencompare/customHtmlExporter/ressources/template.html");
+        templateFile = new File("./src/main/java/org/opencompare/customHtmlExporter/ressources/templateFile.htmlTemplate");
         try {
             jsonParamsLoader = new JsonParamsLoader(json);
             pcmParams = jsonParamsLoader.load();
-            html = Files.toString(template, StandardCharsets.UTF_8);
-            html = toHTML(container.getPcm());
+            htmlTemplate = Files.toString(templateFile, StandardCharsets.UTF_8);
+            htmlTemplate = toHTML(container.getPcm());
             return true;
         } catch (Exception e) {
             e.printStackTrace();
@@ -38,31 +46,36 @@ public class CustomHtmlExporter extends HTMLExporter {
     }
 
     @Override
-    //@todo export html
+    //@todo export htmlTemplate
     public String toHTML(PCM pcm) {
-        return null;
+        settings.prettyPrint();
+        document = Jsoup.parse(htmlTemplate);
+        body = document.body();
+        document.head().select("title").first().text(pcmParams.getTitle());
+        pcm.accept(this);
+        return document.outputSettings(settings).outerHtml();
     }
 
     @Override
-    //@todo export html
+    //@todo export htmlTemplate
     public void visit(PCM pcm) {
 
     }
 
     @Override
-    //@todo export html
+    //@todo export htmlTemplate
     public void visit(Feature feature) {
 
     }
 
     @Override
-    //@todo export html
+    //@todo export htmlTemplate
     public void visit(Product product) {
 
     }
 
     @Override
-    //@todo export html
+    //@todo export htmlTemplate
     public void visit(Cell cell) {
 
     }
