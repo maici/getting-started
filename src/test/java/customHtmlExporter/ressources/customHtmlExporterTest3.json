@@ -1,0 +1,74 @@
+{
+  "pcm": {
+    "title":  "Le DAS des smartphones sous Windows Phone",
+    "description": "pcmTest description",
+    "invert": "false",
+    "style": {
+      "line-height": "21px",
+      "font" : "Arial",
+      "border" : "none"
+    },
+    "features": {
+      "elements": [
+        {
+          "id": "1",
+          "style": {
+             "width": "4%"
+          }
+        },
+        {
+          "id": "2",
+          "style": {
+             "width": "32%",
+          }
+        },
+         {
+          "id": "3",
+          "style": {
+             "width": "12%"
+          }
+        },
+         {
+          "id": "4",
+          "style": {
+             "width": "17%"
+          }
+        }
+      ]
+    },
+    "products" : {
+	    "operations": [
+	      {
+	        "type": "comparison",
+	        "values": {
+	          "operation": "<",
+	          "operand": "0,51"
+	        },
+	        "style": {
+	        "color" : "#048711"
+	        }
+	      },
+	      {
+	        "type": "range",
+	        "values": {
+	          "minValue": "0,51",
+	          "maxValue": "0,8"
+	        },
+	        "style": {
+	        "color" : "#8E1296"
+	        }
+	      },
+	      {
+	        "type": "comparison",
+	        "values": {
+	          "operation": ">",
+	          "operand": "0,8"
+	        },
+	        "style": {
+	        "color" : "#AE1919"
+	        }
+	      }
+	    ]
+	  }
+  }
+}
