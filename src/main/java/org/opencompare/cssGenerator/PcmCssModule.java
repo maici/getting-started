@@ -35,11 +35,11 @@ public class PcmCssModule {
      * @return CssModule Object
      */
     public CssModule getModule(){
+        
         return new CssModule() {
-
             @Override
             public void configure(CssBuilder out) throws IOException {
-                for(String property: properties.keySet()){
+                for (String property : properties.keySet()) {
                     out.addRule(classe, Properties.builder().set(property, properties.get(property)));
                 }
             }
