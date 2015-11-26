@@ -4,7 +4,8 @@
     "description": "pcmTest description",
     "invert": "false",
     "style": {
-      "color": "#123123"
+      "color": "#ff0000",
+      "backgroundColor": "#000000"
     },
     "operations": [
       {

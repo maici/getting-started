@@ -1,7 +1,7 @@
 package org.opencompare.customHtmlExporter;
 
 import org.junit.Test;
-import org.opencompare.api.java.PCM;
+import org.opencompare.api.java.PCMContainer;
 import org.opencompare.api.java.impl.io.KMFJSONLoader;
 import org.opencompare.api.java.io.HTMLExporter;
 import org.opencompare.api.java.io.PCMLoader;
@@ -22,13 +22,14 @@ public class customHtmlExporterTest {
         File jsonFile = new File("params/example.json");
 
         PCMLoader loader = new KMFJSONLoader();
-        PCM pcm = loader.load(pcmFile).get(0).getPcm();
+        PCMContainer pcmContainer = loader.load(pcmFile).get(0);
 
         JsonParamsLoader jsonParamsLoader = new JsonParamsLoader(jsonFile);
         PcmParams pcmParams = jsonParamsLoader.load();
+        System.out.println(pcmParams.getTitle());
 
         CustomHtmlExporter exporter = new CustomHtmlExporter();
-        exporter.export(pcm, pcmParams);
+        exporter.export(pcmContainer, pcmParams);
 
         HTMLExporter exporterOpencompare = new HTMLExporter();
         PrintWriter printWriter = new PrintWriter("./out/pcm_oc.html");
