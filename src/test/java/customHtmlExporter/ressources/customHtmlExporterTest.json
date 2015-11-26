@@ -1,0 +1,42 @@
+{
+  "pcm": {
+    "title":  "Tableau comparatif des différentes versions de Prius françaises et leurs équipements",
+    "description": "pcmTest description",
+    "invert": "false",
+    "style": {
+      "color": "#123123",
+      "font":"sans-serif",
+      "backgroundColor": "#EFEFEF",
+      "border" : "1px solid #807F7F"
+    },
+    "operations": [
+        {
+        "type": "string-comparison",
+        "values": {
+          "string": "OUI"
+        },
+        "style": {
+        "backgroundColor": "#EAF1D0"
+        	}
+      },
+      {
+        "type": "string-comparison",
+        "values": {
+          "string": "NON"
+        },
+        "style": {
+        "backgroundColor": "#E1B6B8"
+        	}
+      },
+      {
+        "type": "string-comparison",
+        "values": {
+          "string": "Option"
+        },
+        "style": {
+        "backgroundColor": "#FFFFFF"
+        	}
+      }
+    ]
+  }
+}
