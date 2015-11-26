@@ -11,7 +11,7 @@ public class JsonParamsLoaderTest {
 
     @Test
     public void testLoad() throws Exception {
-        JsonParamsLoader jsonParamsLoader = new JsonParamsLoader(new File("./src/test/java/org/opencompare/jsonParser/resources/params1.json"));
+        JsonParamsLoader jsonParamsLoader = new JsonParamsLoader(new File("./params/example.json"));
         PcmParams pcmParams = jsonParamsLoader.load();
         System.out.println(pcmParams.getTitle());
         System.out.println(pcmParams.getDescription());
@@ -19,8 +19,10 @@ public class JsonParamsLoaderTest {
         System.out.println(pcmParams.getStyle());
         System.out.println(pcmParams.getFeatures().getStyle());
         System.out.println(pcmParams.getFeatures().hasStyle());
-        System.out.println(pcmParams.getFeatures().getElement(0).getStyle());
-        System.out.println(pcmParams.getFeatures().getElement(0).getCell(0).getStyle());
+        System.out.println(pcmParams.getFeatures().getElements());
+        System.out.println(pcmParams.getFeatures().getElement("feature1").getStyle());
+        System.out.println(pcmParams.getFeatures().getElement("feature1").getCells());
+        System.out.println(pcmParams.getFeatures().getElement("feature1").getCell("feature1_cell1").getStyle());
         System.out.println(pcmParams.hasOperations());
         System.out.println(pcmParams.getOperation(0).execute(10));
         System.out.println(pcmParams.getOperation(1).execute(9.9));

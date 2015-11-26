@@ -1,7 +1,6 @@
 package org.opencompare;
 
 import org.opencompare.api.java.*;
-import org.opencompare.api.java.io.HTMLExporter;
 import org.opencompare.api.java.util.PCMVisitor;
 import org.opencompare.api.java.value.*;
 
@@ -18,15 +17,22 @@ public class MyPCMPrinter implements PCMVisitor {
      */
     public void print(PCM pcm) {
 
-        // We start by listing the names of the products
+        /*// We start by listing the names of the products
         System.out.println("--- Products ---");
         for (Product product : pcm.getProducts()) {
+            System.out.println(product.getName());
+        }*/
+
+        // We start by listing the names of the products
+        System.out.println(pcm.getConcreteFeatures().size());
+        System.out.println("--- Features ---");
+        for (AbstractFeature product : pcm.getFeatures()) {
             System.out.println(product.getName());
         }
 
         // Then, we use a visitor to print the content of the cells that represent a boolean value
-        System.out.println("--- Boolean values ---");
-        pcm.accept(this);
+        /*System.out.println("--- Boolean values ---");
+        pcm.accept(this);*/
 
     }
 

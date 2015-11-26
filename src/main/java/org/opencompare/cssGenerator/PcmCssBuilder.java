@@ -37,21 +37,30 @@ public class PcmCssBuilder{
     public void addModule(String classe, Map<String, String> properties){
         modules.add(new PcmCssModule(classe, properties).getModule());
     }
+
+    /**
+     * Check if there css modules
+     * @return boolean
+     */
+    public boolean hasModules() {
+        return !this.modules.isEmpty();
+    }
     
     /**
      * Create css file with all modules defined
      * @param name Name of the css generated file
      */
     public void generateCss(String name) {
-        Genesis.Builder genesis = Genesis.builder();
-        for(CssModule mod: modules){
-            genesis.install(mod);
+        if (hasModules()) {
+            Genesis.Builder genesis = Genesis.builder();
+            for (CssModule mod : modules) {
+                genesis.install(mod);
+            }
+            try {
+                genesis.build().writeCssFile(new File(name));
+            } catch (IOException ex) {
+                Logger.getLogger(PcmCssBuilder.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
-        try {
-            genesis.build().writeCssFile(new File(name));
-        } catch (IOException ex) {
-            Logger.getLogger(PcmCssBuilder.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
     }
 }

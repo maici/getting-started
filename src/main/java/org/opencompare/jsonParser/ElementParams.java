@@ -1,6 +1,7 @@
 package org.opencompare.jsonParser;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -9,36 +10,22 @@ import java.util.Map;
  * @todo tests
  */
 public class ElementParams {
-    private long id;
-    private long order;
+    private int order;
     private Style style;
-    private List<CellParams> cells;
+    private Map<String,Style> cells;
     private List<IOperation> operations;
 
+    /**
+     * Constructor
+     */
     public ElementParams() {
-        this.cells = new ArrayList<>();
+        this.cells = new HashMap<>();
         this.operations = new ArrayList<>();
     }
 
     /**
-     * Return the element id
-     * @return long
-     */
-    public long getId() {
-        return id;
-    }
-
-    /**
-     * Set the element id
-     * @return long
-     */
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    /**
      * Return the order of an element (feature/product)
-     * @return long
+     * @return int
      */
     public long getOrder() {
         return order;
@@ -46,9 +33,9 @@ public class ElementParams {
 
     /**
      * Set the order of an element (feature/product)
-     * @param order long
+     * @param order int
      */
-    public void setOrder(long order) {
+    public void setOrder(int order) {
         this.order = order;
     }
 
@@ -78,45 +65,54 @@ public class ElementParams {
 
     /**
      * Return all the cells
-     * @return list
+     * @return Map
      */
-    public List<CellParams> getCells() {
+    public Map<String, Style> getCells() {
         return cells;
     }
 
     /**
      * Set a list of cells
-     * @param cells List
+     * @param cells Map
      */
-    public void setCells(List<CellParams> cells) {
+    public void setCells(Map<String, Style> cells) {
         this.cells = cells;
     }
 
     /**
      * Return cell parameters
-     * @param index int
+     * @param key String
      * @return CellParams
      */
-    public CellParams getCell(int index) {
-        return cells.get(index);
+    public Style getCell(String key) {
+        return cells.get(key);
+    }
+
+    /**
+     * Check if the cell exist
+     * @param key String
+     * @return boolean
+     */
+    public boolean containsCell(String key) {
+        return cells.containsKey(key);
     }
 
     /**
      * Add style to a cell of the element (feature/product)
-     * @param cellParams CellParams
-     * @return boolean
+     * @param key String
+     * @param cellParams Style
+     * @return CellParams
      */
-    public boolean addCellStyle(CellParams cellParams) {
-        return cells.add(cellParams);
+    public Style addCellStyle(String key, Style cellParams) {
+        return cells.put(key, cellParams);
     }
 
     /**
      * Remove cell style of the element (feature/product)
-     * @param cellParams CellParams
-     * @return boolean
+     * @param key String
      */
-    public boolean removeCellStyle(CellParams cellParams) {
-        return cells.remove(cellParams);
+    public void removeCellStyle(String key) {
+        cells.remove(key);
     }
 
     /**
