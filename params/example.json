@@ -1,11 +1,11 @@
 {
   "pcm": {
-    "title":  "pcmTest",
-    "description": "pcmTest description",
+    "title":  "Ma super pcm !!",
+    "description": "Ici une super description expliquant ma PCM !!!!",
     "invert": "false",
     "style": {
-      "color": "#ff0000",
-      "backgroundColor": "#000000"
+      "color": "#000000",
+      "backgroundColor": "#ffffff"
     },
     "operations": [
       {
@@ -35,24 +35,17 @@
     "features": {
       "style": {
         "font": "Arial",
-        "backgroundColor": "#000000"
+        "backgroundColor": "#ff0000"
       },
       "elements": [
         [
-          "feature1",
+          "Release Date",
           {
             "order": "1",
             "style": {
-              "color": "#456789"
-            },
-            "cells": [
-              [
-                "feature1_cell1",
-                {
-                  "font": "CellFont"
-                }
-              ]
-            ]
+              "color": "#fff000",
+              "backgroundColor": "#0fff00"
+            }
           }
         ]
       ]

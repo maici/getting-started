@@ -99,6 +99,7 @@ public class Style {
      * @return boolean
      */
     public boolean hasStyle() {
+        getStyle();
         return !style.isEmpty();
     }
 

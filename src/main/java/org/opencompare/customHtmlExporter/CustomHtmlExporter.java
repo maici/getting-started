@@ -5,11 +5,13 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.opencompare.api.java.*;
+import org.opencompare.api.java.impl.PCMFactoryImpl;
 import org.opencompare.api.java.io.HTMLExporter;
 import org.opencompare.cssGenerator.PcmCssBuilder;
 import org.opencompare.jsonParser.PcmParams;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
 import java.util.Collections;
@@ -49,16 +51,17 @@ public class CustomHtmlExporter extends HTMLExporter {
         }
         String path = "./out";
         cssFile = "style.css";
+        String templatePath = "./template";
         File templateFile = new File("./template/template.html");
         this.pcmParams = pcmParams;
         try {
             htmlTemplate = Files.toString(templateFile, StandardCharsets.UTF_8);
             htmlTemplate = toHTML(pcm);
-            new File(path).mkdir();
+            createExportDirectories(path, templatePath);
             writer = new PrintWriter(path + "/pcm.html", "UTF-8");
             writer.write(htmlTemplate);
             writer.close();
-            pcmCssBuilder.generateCss(path + "/" + cssFile);
+            pcmCssBuilder.generateCss(path + "/css/" + cssFile);
             return true;
         } catch (Exception e) {
             e.printStackTrace();
@@ -69,13 +72,16 @@ public class CustomHtmlExporter extends HTMLExporter {
     @Override
     //@todo export htmlTemplate
     public String toHTML(PCM pcm) {
+        if(pcmParams.isInvert()) {
+            pcm.invert(new PCMFactoryImpl());
+        }
         settings.prettyPrint();
         Document document = Jsoup.parse(htmlTemplate);
         body = document.body();
         document.head().select("title").first().text(pcmParams.getTitle());
         pcm.accept(this);
         if(pcmCssBuilder.hasModules()) {
-            document.head().append("<link rel=\"stylesheet\" href=" + cssFile + ">");
+            document.head().append("<link rel=\"stylesheet\" href= css/" + cssFile + ">");
         }
         return document.outputSettings(settings).outerHtml();
     }
@@ -85,13 +91,20 @@ public class CustomHtmlExporter extends HTMLExporter {
     public void visit(PCM pcm) {
         LinkedList<AbstractFeature> featuresToVisit = new LinkedList<>();
         LinkedList<AbstractFeature> nextFeaturesToVisit;
-        featuresToVisit.addAll(pcm.getFeatures());
-        Element table = body.appendElement("table");
-        table.attr("id", "matrix_" + pcmParams.getTitle()).attr("border", "1");
-        System.out.println(this.pcmParams.getStyle());
 
+        body.addClass("container");
+        Element description = body.appendElement("div").addClass("page-header");
+        description.appendElement("h1").text(pcmParams.getTitle()).appendElement("small").text(pcmParams.getDescription());
+
+        featuresToVisit.addAll(pcm.getFeatures());
+        Element divTable = body.appendElement("div");
+        divTable.addClass("table-responsive");
+        Element table = divTable.appendElement("table");
+        table.addClass("table");
+        table.addClass("table-hover");
+        table.attr("id", "matrix_" + pcmParams.getTitle()).attr("border", "1");
+        table.appendElement("caption").text(pcmParams.getDescription());
         if(pcmParams.hasStyle()) {
-            System.out.println(this.pcmParams.hasStyle());
             pcmCssBuilder.addModule(".pcm", pcmParams.getStyle());
             table.addClass("pcm");
         }
@@ -105,7 +118,7 @@ public class CustomHtmlExporter extends HTMLExporter {
         featuresToVisit.addAll(pcm.getFeatures());
 
         tr = table.appendElement("tr");
-        tr.appendElement("th").attr("rowspan", Integer.toString(featureDepth)).text("Product");
+        tr.appendElement("th").text("Product");
         while(!featuresToVisit.isEmpty()) {
             Collections.sort(featuresToVisit, new Comparator<AbstractFeature>() {
                 @Override
@@ -124,11 +137,12 @@ public class CustomHtmlExporter extends HTMLExporter {
             }
         }
 
-        tr = table.appendElement("tr");
         if(pcmParams.hasFeatures() && pcmParams.getFeatures().hasStyle()) {
+            System.out.println("feature : " + pcmParams.getFeatures().hasStyle());
             pcmCssBuilder.addModule(".features", pcmParams.getFeatures().getStyle());
             tr.addClass("features");
         }
+
         for(AbstractFeature feature: featuresToVisit) {
             feature.accept(this);
         }
@@ -151,8 +165,8 @@ public class CustomHtmlExporter extends HTMLExporter {
         if(pcmParams.hasFeatures() &&
                 pcmParams.getFeatures().containsElement(feature.getName()) &&
                 pcmParams.getFeatures().getElement(feature.getName()).hasStyle()) {
-            pcmCssBuilder.addModule("." + feature.getName(), pcmParams.getFeatures().getElement(feature.getName()).getStyle());
-            td.addClass(feature.getName());
+            pcmCssBuilder.addModule("." + feature.getName().replaceAll("\\s+",""), pcmParams.getFeatures().getElement(feature.getName()).getStyle());
+            td.addClass(feature.getName().replaceAll("\\s+", ""));
         }
     }
 
@@ -164,8 +178,8 @@ public class CustomHtmlExporter extends HTMLExporter {
         if(pcmParams.hasProducts() &&
                 pcmParams.getProducts().containsElement(product.getName()) &&
                 pcmParams.getProducts().getElement(product.getName()).hasStyle()) {
-            pcmCssBuilder.addModule("." + product.getName(), pcmParams.getProducts().getElement(product.getName()).getStyle());
-            tr.addClass(product.getName());
+            pcmCssBuilder.addModule("." + product.getName().replaceAll("\\s+",""), pcmParams.getProducts().getElement(product.getName()).getStyle());
+            tr.addClass(product.getName().replaceAll("\\s+",""));
         }
         List<Cell> cells = product.getCells();
 
@@ -184,13 +198,34 @@ public class CustomHtmlExporter extends HTMLExporter {
     //@todo export htmlTemplate
     public void visit(Cell cell) {
         Element td = tr.appendElement("td").text(cell.getContent());
-        String cellId = cell.getFeature().getName() + "_";
+        String cellId = cell.getFeature().getName().replaceAll("\\s+", "") + "_";
+        if(pcmParams.getFeatures().containsElement(cell.getFeature().getName())) {
+            td.addClass(cell.getFeature().getName().replaceAll("\\s+", ""));
+        }
         if(pcmParams.hasProducts() &&
                 pcmParams.getProducts().containsElement(cell.getProduct().getName()) &&
                 pcmParams.getProducts().getElement(cell.getProduct().getName()).containsCell(cellId) &&
                 pcmParams.getProducts().getElement(cell.getProduct().getName()).getCell(cellId).hasStyle()) {
             pcmCssBuilder.addModule("." + cellId, pcmParams.getProducts().getElement(cell.getProduct().getName()).getCell(cellId).getStyle());
             td.addClass(cellId);
+        }
+    }
+
+    public void createExportDirectories(String path, String templatePath) throws IOException {
+        File root = new File(path);
+        root.mkdir();
+        copyDirectories(path, new File(templatePath).listFiles());
+    }
+
+    public void copyDirectories(String path, File[] dir) throws IOException {
+        for(File file: dir) {
+            if(file.isDirectory()) {
+                new File(path + "/" + file.getName()).mkdir();
+                copyDirectories(path + "/" + file.getName(), file.listFiles());
+            }
+            else {
+                Files.copy(file, new File(path + "/" + file.getName()));
+            }
         }
     }
 }
