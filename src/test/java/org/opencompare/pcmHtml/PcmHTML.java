@@ -1,4 +1,4 @@
-package org.opencompar.pcmHtml;
+package org.opencompare.pcmHtml;
 
 import static org.junit.Assert.*;
 
