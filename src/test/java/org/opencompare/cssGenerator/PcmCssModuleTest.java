@@ -35,20 +35,21 @@ public class PcmCssModuleTest {
         builder.addModule(".pcm", styles);
         
         String fileName = "testModuleCss.css";
-        File file = new File(fileName);
+        String path = "./src/test/css/";
+        File file = new File(path+fileName);
         if(file.exists()) { file.delete(); }
         
-        builder.generateCss(fileName);
+        builder.generateCss(path+fileName);
         
-        file = new File(fileName);
+        file = new File(path+fileName);
         
-        // On v�rifie que le fichier a bien �t� g�n�r�.
-        Assert.assertTrue("Le fichier a �t� g�n�r�.", file.exists());
+        // On vérifie que le fichier a bien été généré.
+        Assert.assertTrue("Le fichier a été généré.", file.exists());
         
         byte[] encoded = Files.readAllBytes(Paths.get(file.getPath()));
         String fileContent = new String(encoded, StandardCharsets.UTF_8);
         
-        Assert.assertTrue("Le fichier g�n�n� est correct.", fileContent.equals(result));      
+        Assert.assertTrue("Le fichier généné est correct.", fileContent.equals(result));
     }
     
     @Test
@@ -73,19 +74,20 @@ public class PcmCssModuleTest {
         builder.addModule(".features", stylesFeatures);
         
         String fileName = "testModuleCss.css";
-        File file = new File(fileName);
+        String path = "./src/test/css/";
+        File file = new File(path + fileName);
         if(file.exists()) { file.delete(); }
         
-        builder.generateCss(fileName);
+        builder.generateCss(path + fileName);
         
-        file = new File(fileName);
+        file = new File(path + fileName);
         
-        // On v�rifie que le fichier a bien �t� g�n�r�.
-        Assert.assertTrue("Le fichier a �t� g�n�r�.", file.exists());
+        // On vérifie que le fichier a bien été généré.
+        Assert.assertTrue("Le fichier a été généré.", file.exists());
         
         byte[] encoded = Files.readAllBytes(Paths.get(file.getPath()));
         String fileContent = new String(encoded, StandardCharsets.UTF_8);
         
-        Assert.assertTrue("Le fichier g�n�n� est correct.", fileContent.equals(result));         
+        Assert.assertTrue("Le fichier généné est correct.", fileContent.equals(result));
     }
 }
