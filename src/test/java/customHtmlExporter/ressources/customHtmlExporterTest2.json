@@ -1,0 +1,37 @@
+{
+  "pcm": {
+    "title":  "Comparaison des cellules eucaryotes et procaryotes",
+    "description": "pcmTest description",
+    "invert": "false",
+    "style": {
+     "color": "#3a3a36"
+    },
+    "features": {
+      "style": {
+        "font": "Arial",
+        
+      },
+      "elements": [
+        {
+          "id": "1",
+          "style": {
+             "backgroundColor": "#99ffff"
+          }
+        },
+        {
+          "id": "2",
+          "style": {
+             "backgroundColor": "#014a4a",
+             "color" : "#FFFFFFF"
+          }
+        },
+         {
+          "id": "3",
+          "style": {
+             "backgroundColor": "#99ffcc"
+          }
+        }
+      ]
+    }
+  }
+}
