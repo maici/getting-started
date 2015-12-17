@@ -13,7 +13,7 @@ public class ElementParams {
     private int order;
     private Style style;
     private Map<String,Style> cells;
-    private List<IOperation> operations;
+    private List<Operation> operations;
 
     /**
      * Constructor
@@ -60,7 +60,8 @@ public class ElementParams {
      * @return boolean
      */
     public boolean hasStyle() {
-        return this.style.hasStyle();
+        if(style != null) return this.style.hasStyle();
+        return false;
     }
 
     /**
@@ -127,7 +128,7 @@ public class ElementParams {
      * Return all the operations
      * @return list
      */
-    public List<IOperation> getOperations() {
+    public List<Operation> getOperations() {
         return operations;
     }
 
@@ -135,7 +136,7 @@ public class ElementParams {
      * Set a list of operations
      * @param operations
      */
-    public void setOperations(List<IOperation> operations) {
+    public void setOperations(List<Operation> operations) {
         this.operations = operations;
     }
 
@@ -144,7 +145,7 @@ public class ElementParams {
      * @param operation
      * @return boolean
      */
-    public boolean addOperation(IOperation operation) {
+    public boolean addOperation(Operation operation) {
         return operations.add(operation);
     }
 
@@ -153,7 +154,7 @@ public class ElementParams {
      * @param operation
      * @return boolean
      */
-    public boolean removeOperation(IOperation operation) {
+    public boolean removeOperation(Operation operation) {
         return operations.remove(operation);
     }
 
@@ -162,6 +163,7 @@ public class ElementParams {
      * @return boolean
      */
     public boolean hasOperations() {
-        return !operations.isEmpty();
+        if(operations != null )return !operations.isEmpty();
+        return false;
     }
 }

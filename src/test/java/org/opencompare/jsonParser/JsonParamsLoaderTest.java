@@ -24,9 +24,6 @@ public class JsonParamsLoaderTest {
         System.out.println(pcmParams.getFeatures().getElement("feature1").getCells());
         System.out.println(pcmParams.getFeatures().getElement("feature1").getCell("feature1_cell1").getStyle());
         System.out.println(pcmParams.hasOperations());
-        System.out.println(pcmParams.getOperation(0).execute(10));
-        System.out.println(pcmParams.getOperation(1).execute(9.9));
-        System.out.println(pcmParams.getOperation(2).execute("test"));
     }
 
 }

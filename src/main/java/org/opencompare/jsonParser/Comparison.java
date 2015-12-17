@@ -11,6 +11,7 @@ public class Comparison implements IOperation<Number> {
     private String operation;
     private long operand;
     private Style style;
+    private String id;
 
     /**
      * Constructor
@@ -53,6 +54,16 @@ public class Comparison implements IOperation<Number> {
      */
     public void setStyle(Style style) {
         this.style = style;
+    }
+
+    @Override
+    public String getId() {
+        return this.id;
+    }
+
+    @Override
+    public void setId(String id) {
+        this.id = id;
     }
 
     /**

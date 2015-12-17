@@ -7,10 +7,10 @@
 package org.opencompare.cssGenerator;
 import com.projetloki.genesis.CssModule;
 import com.projetloki.genesis.Genesis;
+
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collection;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -20,13 +20,13 @@ import java.util.logging.Logger;
  */ 
 public class PcmCssBuilder{
     
-    private Collection<CssModule> modules;
+    private Map<String, CssModule> modules;
     
     /**
      * Constructor
      */
     public PcmCssBuilder(){
-        this.modules = new ArrayList<>();
+        this.modules = new HashMap<>();
     }
     
     /**
@@ -35,7 +35,7 @@ public class PcmCssBuilder{
      * @param properties List of the modified properties and their value
      */
     public void addModule(String classe, Map<String, String> properties){
-        modules.add(new PcmCssModule(classe, properties).getModule());
+        modules.put(classe, new PcmCssModule(classe, properties).getModule());
     }
 
     /**
@@ -45,7 +45,11 @@ public class PcmCssBuilder{
     public boolean hasModules() {
         return !this.modules.isEmpty();
     }
-    
+
+    public boolean containsCSSClass(String cssClasse) {
+        return this.modules.containsKey(cssClasse);
+    }
+
     /**
      * Create css file with all modules defined
      * @param name Name of the css generated file
@@ -53,7 +57,7 @@ public class PcmCssBuilder{
     public void generateCss(String name) {
         if (hasModules()) {
             Genesis.Builder genesis = Genesis.builder();
-            for (CssModule mod : modules) {
+            for (CssModule mod : modules.values()) {
                 genesis.install(mod);
             }
             try {

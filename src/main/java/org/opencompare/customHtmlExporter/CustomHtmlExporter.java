@@ -7,7 +7,10 @@ import org.jsoup.nodes.Element;
 import org.opencompare.api.java.*;
 import org.opencompare.api.java.impl.PCMFactoryImpl;
 import org.opencompare.api.java.io.HTMLExporter;
+import org.opencompare.api.java.value.IntegerValue;
+import org.opencompare.api.java.value.RealValue;
 import org.opencompare.cssGenerator.PcmCssBuilder;
+import org.opencompare.jsonParser.IOperation;
 import org.opencompare.jsonParser.PcmParams;
 
 import java.io.File;
@@ -35,6 +38,7 @@ public class CustomHtmlExporter extends HTMLExporter {
     private PrintWriter writer;
     private PCMMetadata pcmMetadata;
     private int featureDepth;
+    private Product currentProduct;
 
     public CustomHtmlExporter() {
         this.pcmCssBuilder = new PcmCssBuilder();
@@ -101,12 +105,17 @@ public class CustomHtmlExporter extends HTMLExporter {
         divTable.addClass("table-responsive");
         Element table = divTable.appendElement("table");
         table.addClass("table");
-        table.addClass("table-hover");
-        table.attr("id", "matrix_" + pcmParams.getTitle()).attr("border", "1");
+        table.attr("id", "matrix_" + pcmParams.getTitle());
         table.appendElement("caption").text(pcmParams.getDescription());
         if(pcmParams.hasStyle()) {
             pcmCssBuilder.addModule(".pcm", pcmParams.getStyle());
             table.addClass("pcm");
+        }
+
+        if(pcmParams.hasOperations()) {
+            for(IOperation op: pcmParams.getOperations()) {
+                pcmCssBuilder.addModule("." + op.getId(), op.getStyle());
+            }
         }
 
         // Compute depth
@@ -138,9 +147,14 @@ public class CustomHtmlExporter extends HTMLExporter {
         }
 
         if(pcmParams.hasFeatures() && pcmParams.getFeatures().hasStyle()) {
-            System.out.println("feature : " + pcmParams.getFeatures().hasStyle());
             pcmCssBuilder.addModule(".features", pcmParams.getFeatures().getStyle());
             tr.addClass("features");
+
+            if(pcmParams.getFeatures().hasOperations()) {
+                for(IOperation op: pcmParams.getFeatures().getOperations()) {
+                    pcmCssBuilder.addModule(".features_" + op.getId(), op.getStyle());
+                }
+            }
         }
 
         for(AbstractFeature feature: featuresToVisit) {
@@ -149,8 +163,13 @@ public class CustomHtmlExporter extends HTMLExporter {
 
         if(pcmParams.hasProducts() && pcmParams.getProducts().hasStyle()) {
             pcmCssBuilder.addModule(".products", pcmParams.getProducts().getStyle());
-            tr.addClass("products");
+            if(pcmParams.getProducts().hasOperations()) {
+                for(IOperation op: pcmParams.getProducts().getOperations()) {
+                    pcmCssBuilder.addModule(".products_" + op.getId(), op.getStyle());
+                }
+            }
         }
+
         for (Product product : pcmMetadata.getSortedProducts()) {
             tr = table.appendElement("tr");
             product.accept(this);
@@ -163,23 +182,48 @@ public class CustomHtmlExporter extends HTMLExporter {
         Element td = tr.appendElement("th").text(feature.getName());
 
         if(pcmParams.hasFeatures() &&
-                pcmParams.getFeatures().containsElement(feature.getName()) &&
-                pcmParams.getFeatures().getElement(feature.getName()).hasStyle()) {
-            pcmCssBuilder.addModule("." + feature.getName().replaceAll("\\s+",""), pcmParams.getFeatures().getElement(feature.getName()).getStyle());
-            td.addClass(feature.getName().replaceAll("\\s+", ""));
+                pcmParams.getFeatures().containsElement(feature.getName())) {
+
+            if(pcmParams.getFeatures().getElement(feature.getName()).hasStyle()) {
+                pcmCssBuilder.addModule("." + feature.getName().replaceAll("[^A-Za-z0-9]", ""), pcmParams.getFeatures().getElement(feature.getName()).getStyle());
+                td.addClass(feature.getName().replaceAll("[^A-Za-z0-9]", ""));
+            }
+
+            if(pcmParams.getFeatures().getElement(feature.getName()).hasOperations() &&
+                    !pcmCssBuilder.containsCSSClass(feature.getName())) {
+                for(IOperation op: pcmParams.getFeatures().getElement(feature.getName()).getOperations()) {
+                    pcmCssBuilder.addModule("." + feature.getName().replaceAll("[^A-Za-z0-9]", "") + "_" + op.getId(), op.getStyle());
+                }
+            }
         }
     }
 
     @Override
     //@todo export htmlTemplate
     public void visit(Product product) {
-        tr.appendElement("th").text(product.getName());
+        // Fix pour le probleme cell.getProduct() null pointer
+        this.currentProduct = product;
+
+        Element th = tr.appendElement("th");
+        th.text(product.getName());
+
+        if(pcmParams.hasProducts() && pcmParams.getProducts().hasStyle()) {
+            th.addClass("products");
+        }
 
         if(pcmParams.hasProducts() &&
-                pcmParams.getProducts().containsElement(product.getName()) &&
-                pcmParams.getProducts().getElement(product.getName()).hasStyle()) {
-            pcmCssBuilder.addModule("." + product.getName().replaceAll("\\s+",""), pcmParams.getProducts().getElement(product.getName()).getStyle());
-            tr.addClass(product.getName().replaceAll("\\s+",""));
+                pcmParams.getProducts().containsElement(product.getName())) {
+
+            if(pcmParams.getProducts().getElement(product.getName()).hasStyle()) {
+                pcmCssBuilder.addModule("." + product.getName().replaceAll("[^A-Za-z0-9]", ""), pcmParams.getProducts().getElement(product.getName()).getStyle());
+                tr.addClass(product.getName().replaceAll("[^A-Za-z0-9]", ""));
+            }
+
+            if(pcmParams.getProducts().getElement(product.getName()).hasOperations()) {
+                for(IOperation op: pcmParams.getProducts().getElement(product.getName()).getOperations()) {
+                    pcmCssBuilder.addModule("." + product.getName().replaceAll("[^A-Za-z0-9]", "") + "_" + op.getId(), op.getStyle());
+                }
+            }
         }
         List<Cell> cells = product.getCells();
 
@@ -198,16 +242,70 @@ public class CustomHtmlExporter extends HTMLExporter {
     //@todo export htmlTemplate
     public void visit(Cell cell) {
         Element td = tr.appendElement("td").text(cell.getContent());
-        String cellId = cell.getFeature().getName().replaceAll("\\s+", "") + "_";
-        if(pcmParams.getFeatures().containsElement(cell.getFeature().getName())) {
-            td.addClass(cell.getFeature().getName().replaceAll("\\s+", ""));
+        String cellId = cell.getFeature().getName().replaceAll("[^A-Za-z0-9]", "") + "_" + this.currentProduct.getName();
+
+        if(pcmParams.hasFeatures() &&
+                pcmParams.getFeatures().containsElement(cell.getFeature().getName()) &&
+                pcmParams.getFeatures().getElement(cell.getFeature().getName()).hasStyle()) {
+            td.addClass(cell.getFeature().getName().replaceAll("[^A-Za-z0-9]", ""));
         }
+
         if(pcmParams.hasProducts() &&
-                pcmParams.getProducts().containsElement(cell.getProduct().getName()) &&
-                pcmParams.getProducts().getElement(cell.getProduct().getName()).containsCell(cellId) &&
-                pcmParams.getProducts().getElement(cell.getProduct().getName()).getCell(cellId).hasStyle()) {
-            pcmCssBuilder.addModule("." + cellId, pcmParams.getProducts().getElement(cell.getProduct().getName()).getCell(cellId).getStyle());
+                pcmParams.getProducts().containsElement(this.currentProduct.getName()) &&
+                pcmParams.getProducts().getElement(this.currentProduct.getName()).containsCell(cellId) &&
+                pcmParams.getProducts().getElement(this.currentProduct.getName()).getCell(cellId).hasStyle()) {
+            pcmCssBuilder.addModule("." + cellId, pcmParams.getProducts().getElement(this.currentProduct.getName()).getCell(cellId).getStyle());
             td.addClass(cellId);
+        }
+
+        Object value;
+
+        if(cell.getInterpretation() instanceof IntegerValue) value = Integer.valueOf(cell.getContent());
+        else if(cell.getInterpretation() instanceof RealValue) value = Float.valueOf(cell.getContent());
+        else value = cell.getContent();
+
+        if(pcmParams.hasOperations()) {
+            for(IOperation op: pcmParams.getOperations()) {
+                if(op.execute(value)) {
+                    td.addClass(op.getId());
+                }
+            }
+        }
+
+        if(pcmParams.hasFeatures() && pcmParams.getFeatures().hasOperations()) {
+            for(IOperation op: pcmParams.getFeatures().getOperations()) {
+                if(op.execute(value)) {
+                    td.addClass("features_" + op.getId());
+                }
+            }
+        }
+
+        if(pcmParams.hasFeatures() &&
+                pcmParams.getFeatures().containsElement(cell.getFeature().getName()) &&
+                pcmParams.getFeatures().getElement(cell.getFeature().getName()).hasOperations()) {
+            for(IOperation op: pcmParams.getFeatures().getElement(cell.getFeature().getName()).getOperations()) {
+                if(op.execute(value)) {
+                    td.addClass(cell.getFeature().getName().replaceAll("[^A-Za-z0-9]", "") + "_" + op.getId());
+                }
+            }
+        }
+
+        if(pcmParams.hasProducts() && pcmParams.getProducts().hasOperations()) {
+            for(IOperation op: pcmParams.getProducts().getOperations()) {
+                if(op.execute(value)) {
+                    td.addClass("products_" + op.getId());
+                }
+            }
+        }
+
+        if(pcmParams.hasProducts() &&
+                pcmParams.getProducts().containsElement(this.currentProduct.getName()) &&
+                pcmParams.getProducts().getElement(this.currentProduct.getName()).hasOperations()) {
+            for(IOperation op: pcmParams.getProducts().getElement(this.currentProduct.getName()).getOperations()) {
+                if(op.execute(value)) {
+                    td.addClass(this.currentProduct.getName().replaceAll("[^A-Za-z0-9]", "") + "_" + op.getId());
+                }
+            }
         }
     }
 

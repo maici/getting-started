@@ -8,6 +8,7 @@ import java.util.Map;
  */
 public class Operation<T> implements IOperation<T>{
 
+    private String id;
     private String type;
     private Map<String, String> values;
     private Style style;
@@ -29,11 +30,21 @@ public class Operation<T> implements IOperation<T>{
                 operation = new Range(Integer.valueOf(values.get("minValue")), Integer.valueOf(values.get("maxValue")), style);
                 break;
             case "string-comparison":
-                operation = new StringComparison(values.get("string"), style);
+                operation = new StringComparison(values.get("match"), style);
                 break;
             default:
                 throw new IllegalArgumentException("Incorrect operation type");
         }
+    }
+
+    @Override
+    public String getId() {
+        return this.id;
+    }
+
+    @Override
+    public void setId(String id) {
+        this.id = id;
     }
 
     /**
@@ -57,5 +68,10 @@ public class Operation<T> implements IOperation<T>{
     @Override
     public Map getStyle() {
         return this.style.getStyle();
+    }
+
+    @Override
+    public void setStyle(Style style) {
+        this.style = style;
     }
 }

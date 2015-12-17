@@ -41,7 +41,8 @@ public class ElementsParams {
      * @return boolean
      */
     public boolean hasStyle() {
-        return this.style.hasStyle();
+        if(style != null) return this.style.hasStyle();
+        return false;
     }
 
     /**
@@ -135,6 +136,7 @@ public class ElementsParams {
      * @return boolean
      */
     public boolean hasOperations() {
-        return !operations.isEmpty();
+        if(operations != null )return !operations.isEmpty();
+        return false;
     }
 }

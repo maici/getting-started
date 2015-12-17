@@ -8,6 +8,7 @@ import java.util.Map;
  */
 public class Range implements IOperation<Number> {
 
+    private String id;
     private long minValue;
     private long maxValue;
     private Style style;
@@ -38,6 +39,16 @@ public class Range implements IOperation<Number> {
      */
     public void setStyle(Style style) {
         this.style = style;
+    }
+
+    @Override
+    public String getId() {
+        return this.id;
+    }
+
+    @Override
+    public void setId(String id) {
+        this.id = id;
     }
 
     /**

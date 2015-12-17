@@ -9,27 +9,46 @@
     },
     "operations": [
       {
+        "id": "comp_sup_200",
         "type": "comparison",
         "values": {
-          "operation": "<",
-          "operand": "200"
+          "operation": ">",
+          "operand": "500"
         },
-        "style": {}
+        "style": {
+          "color": "#0000ff"
+        }
       },
       {
-        "type": "range",
-        "values": {
-          "minValue": "0",
-          "maxValue": "10"
-        },
-        "style": {}
-      },
-      {
+        "id": "match_yes",
         "type": "string-comparison",
-        "values": {
-          "string": "test"
+        "values" : {
+          "match": "Yes"
         },
-        "style": {}
+        "style": {
+          "color": "#00ff00"
+        }
+      },
+      {
+        "id": "match_no",
+        "type": "string-comparison",
+        "values" : {
+          "match": "No"
+        },
+        "style": {
+          "color": "#ff0000"
+        }
+      },
+      {
+        "id": "between_1000_10000",
+        "type": "range",
+        "values" : {
+          "minValue": "1000",
+          "maxValue": "10000"
+        },
+        "style": {
+          "color": "#fff000"
+        }
       }
     ],
     "features": {
@@ -46,6 +65,72 @@
               "color": "#fff000",
               "backgroundColor": "#0fff00"
             }
+          }
+        ],
+        [
+          "Sensor type",
+          {
+            "style": {
+              "color": "#ff00ff",
+              "fontStyle": "italic"
+            }
+          }
+        ],
+        [
+          "Weight (g)",
+          {
+            "operations": [
+              {
+                "id": "weigh_sup_600",
+                "type": "comparison",
+                "values": {
+                  "operation": ">",
+                  "operand": "600"
+                },
+                "style": {
+                  "backgroundColor": "#000000"
+                }
+              }
+            ]
+          }
+        ]
+      ]
+    },
+    "products": {
+      "style": {
+        "backgroundColor": "#f0f000"
+      },
+      "elements": [
+        [
+          "D1",
+          {
+            "style": {
+              "backgroundColor": "#ff00f0"
+            }
+          }
+        ],
+        [
+          "D3S",
+          {
+            "style": {
+              "backgroundColor": "#f0000f"
+            },
+            "operations": [
+              {
+                "id": "between_0_100",
+                "type": "range",
+                "values": {
+                  "minValue": "0",
+                  "maxValue": "100"
+                },
+                "style": {
+                  "fontStyle": "italic",
+                  "fontWeight": "bold",
+                  "color": "#ffffff",
+                  "backgroundColor": "#dddddd"
+                }
+              }
+            ]
           }
         ]
       ]

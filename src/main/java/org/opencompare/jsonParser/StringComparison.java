@@ -7,6 +7,7 @@ import java.util.Map;
  */
 public class StringComparison implements IOperation<String> {
 
+    private String id;
     private String string;
     private Style style;
 
@@ -18,6 +19,16 @@ public class StringComparison implements IOperation<String> {
     public StringComparison(String string, Style style) {
         this.string = string;
         this.style = style;
+    }
+
+    @Override
+    public String getId() {
+        return this.id;
+    }
+
+    @Override
+    public void setId(String id) {
+        this.id = id;
     }
 
     /**
@@ -38,5 +49,10 @@ public class StringComparison implements IOperation<String> {
     @Override
     public Map getStyle() {
         return this.style.getStyle();
+    }
+
+    @Override
+    public void setStyle(Style style) {
+        this.style = style;
     }
 }
