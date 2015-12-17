@@ -6,13 +6,12 @@
 
 package org.opencompare.cssGenerator;
 
-import java.io.File;
-import java.io.IOException;
-import org.junit.Before;
 import org.junit.Test;
-import static org.junit.Assert.*;
 import org.opencompare.jsonParser.JsonParamsLoader;
 import org.opencompare.jsonParser.PcmParams;
+
+import java.io.File;
+import java.io.IOException;
 
 /**
  *
@@ -22,11 +21,11 @@ public class PcmCssModuleTest {
 
     @Test
     public void testGetModule() throws IOException, Exception {
-        JsonParamsLoader jsonParamsLoader = new JsonParamsLoader(new File("./src/test/java/org/opencompare/jsonParser/resources/example.json"));
+        JsonParamsLoader jsonParamsLoader = new JsonParamsLoader(new File("./src/test/params/example.json"));
         PcmParams pcmParams = jsonParamsLoader.load();
         PcmCssBuilder builder = new PcmCssBuilder();
         builder.addModule(".pcm", pcmParams.getStyle());
-        builder.generateCss("myCss.css");
+        builder.generateCss("./src/test/css/myCss.css");
     }
     
 }

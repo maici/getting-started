@@ -11,7 +11,7 @@ public class JsonParamsLoaderTest {
 
     @Test
     public void testLoad() throws Exception {
-        JsonParamsLoader jsonParamsLoader = new JsonParamsLoader(new File("./params/example.json"));
+        JsonParamsLoader jsonParamsLoader = new JsonParamsLoader(new File("./src/test/params/example.json"));
         PcmParams pcmParams = jsonParamsLoader.load();
         System.out.println(pcmParams.getTitle());
         System.out.println(pcmParams.getDescription());

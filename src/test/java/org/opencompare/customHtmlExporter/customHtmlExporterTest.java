@@ -18,8 +18,8 @@ public class customHtmlExporterTest {
 
     @Test
     public void testExport() throws Exception {
-        File pcmFile = new File("pcms/example.pcm");
-        File jsonFile = new File("params/example.json");
+        File pcmFile = new File("./src/test/pcms/example.pcm");
+        File jsonFile = new File("./src/test/params/example.json");
 
         PCMLoader loader = new KMFJSONLoader();
         PCMContainer pcmContainer = loader.load(pcmFile).get(0);

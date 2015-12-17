@@ -167,8 +167,7 @@ public class CustomHtmlExporter extends HTMLExporter {
                 for(IOperation op: pcmParams.getProducts().getOperations()) {
                     pcmCssBuilder.addModule(".products_" + op.getId(), op.getStyle());
                 }
-            }
-        }
+            }        }
 
         for (Product product : pcmMetadata.getSortedProducts()) {
             tr = table.appendElement("tr");
