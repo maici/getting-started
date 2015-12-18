@@ -214,6 +214,7 @@ The json file is structured around 3 customizable elements :
             ]
           }
         ]
+      ]
     }
 ```
 
@@ -259,28 +260,28 @@ open source
 
 # Running
 
-1. First of all, you need a pcm file and your parameters in json format.
+* First of all, you need a pcm file and your parameters in json format.
 
 ```java
 File pcmFile = new File("./src/test/pcms/example.pcm");
 File jsonFile = new File("./src/test/params/example.json");
 ```
 
-2. The you need to instantiate a pcm object
+* The you need to instantiate a pcm object
 
 ```java
 PCMLoader loader = new KMFJSONLoader();
 PCMContainer pcmContainer = loader.load(pcmFile).get(0);
 ```
 
-3. You will also need to instantiate the pcm parameters object (json file)
+* You will also need to instantiate the pcm parameters object (json file)
 
 ```java
 JsonParamsLoader jsonParamsLoader = new JsonParamsLoader(jsonFile);
 PcmParams pcmParams = jsonParamsLoader.load();
 ```
 
-4. Finally you will have to create the exporter and launch the export
+* Finally you will have to create the exporter and launch the export
 
 ```java
 CustomHtmlExporter exporter = new CustomHtmlExporter();
