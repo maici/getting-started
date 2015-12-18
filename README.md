@@ -19,7 +19,7 @@ To exploit Json format with Java, we retained the Google-Gson library which is a
 
 The style of the pcm can be customize mainly thought 2 json objects :
 
-1. Style : define the css style.
+* Style : define the css style.
 ```json
 {
     "style": {
@@ -32,7 +32,7 @@ The style of the pcm can be customize mainly thought 2 json objects :
     }
 }
 ```
-2. Operation: an operation change the style of the pcm when the condition specified is true
+* Operation: an operation change the style of the pcm when the condition specified is true
 ```json
 {
     "id": "op_sup_0",
@@ -90,7 +90,7 @@ The style of the pcm can be customize mainly thought 2 json objects :
 ```
 The json file is structured around 3 customizable elements :
 
-1. the pcm : style and/or operations that affect all the pcm
+* the pcm : style and/or operations that affect all the pcm
 
 ```json
 "pcm": {
@@ -120,7 +120,7 @@ The json file is structured around 3 customizable elements :
 }
 ```
 
-2. the features (pcm columns) : style and/or operations that affect all the colums of the pcm
+* the features (pcm columns) : style and/or operations that affect all the colums of the pcm
 
 ```json
 "pcm":{
@@ -152,7 +152,7 @@ The json file is structured around 3 customizable elements :
   }
 ```
 
-3. the products (pcm lines) : style and/or operation that affect all the lines of the pcm
+* the products (pcm lines) : style and/or operation that affect all the lines of the pcm
 
 ```json
 "pcm":{
