@@ -2,7 +2,7 @@
   "pcm": {
     "title":  "Ma super pcm !!",
     "description": "Ici une super description expliquant ma PCM !!!!",
-    "invert": "false",
+    "invert": "true",
     "style": {
       "color": "#000000",
       "backgroundColor": "#ffffff"

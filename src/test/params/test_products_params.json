@@ -1,0 +1,72 @@
+{
+  "pcm": {
+    "title": "pcm title",
+    "description": "pcm description",
+    "products": {
+      "style": {
+        "color": "#000000",
+        "backgroundColor": "#000000",
+        "fontWeight": "bold",
+        "fontStyle": "italic",
+        "font": "Arial",
+        "fontSize": "10"
+      },
+      "operations": [
+        {
+          "id": "op_sup_0",
+          "type": "comparison",
+          "values": {
+            "operation": ">",
+            "operand": "0"
+          },
+          "style": {
+            "color": "#000000"
+          }
+        },
+        {
+          "id": "op_inf_0",
+          "type": "comparison",
+          "values": {
+            "operation": "<",
+            "operand": "0"
+          },
+          "style": {
+            "color": "#000000"
+          }
+        },
+        {
+          "id": "op_eq_0",
+          "type": "comparison",
+          "values": {
+            "operation": "=",
+            "operand": "0"
+          },
+          "style": {
+            "color": "#000000"
+          }
+        },
+        {
+          "id": "op_range_0_1",
+          "type": "range",
+          "values": {
+            "minValue": "0",
+            "maxValue": "1"
+          },
+          "style": {
+            "color": "#000000"
+          }
+        },
+        {
+          "id": "op_match_test",
+          "type": "string-comparison",
+          "values": {
+            "match": "test"
+          },
+          "style": {
+            "color": "#000000"
+          }
+        }
+      ]
+    }
+  }
+}

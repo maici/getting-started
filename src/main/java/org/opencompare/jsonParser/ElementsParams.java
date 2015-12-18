@@ -13,7 +13,7 @@ public class ElementsParams {
 
     private Style style;
     private Map<String, ElementParams> elements;
-    private List<IOperation> operations;
+    private List<Operation> operations;
 
     public ElementsParams() {
         this.elements = new HashMap<>();
@@ -101,7 +101,7 @@ public class ElementsParams {
      * Return all operations
      * @return List
      */
-    public List<IOperation> getOperations() {
+    public List<Operation> getOperations() {
         return operations;
     }
 
@@ -109,26 +109,26 @@ public class ElementsParams {
      * Set a list of operations
      * @param operations List
      */
-    public void setOperations(List<IOperation> operations) {
+    public void setOperations(List<Operation> operations) {
         this.operations = operations;
     }
 
     /**
      * Add an operation for the elements (features/products)
-     * @param iOperation IOperation
+     * @param Operation Operation
      * @return boolean
      */
-    public boolean addOperation(IOperation iOperation) {
-        return operations.add(iOperation);
+    public boolean addOperation(Operation Operation) {
+        return operations.add(Operation);
     }
 
     /**
      * Remove an operation for the elements (features/products)
-     * @param iOperation IOperation
+     * @param Operation Operation
      * @return boolean
      */
-    public boolean removeOperation(IOperation iOperation) {
-        return operations.remove(iOperation);
+    public boolean removeOperation(Operation Operation) {
+        return operations.remove(Operation);
     }
 
     /**

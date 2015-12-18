@@ -194,4 +194,14 @@ public class PcmParams {
         if(operations != null )return !operations.isEmpty();
         return false;
     }
+
+    /**
+     * Invert features and products parameters
+     */
+    public void invertParams() {
+        ElementsParams tmp;
+        tmp = this.features;
+        this.features = this.products;
+        this.products = tmp;
+    }
 }

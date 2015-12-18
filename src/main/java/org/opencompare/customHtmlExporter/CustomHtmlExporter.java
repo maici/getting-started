@@ -78,6 +78,7 @@ public class CustomHtmlExporter extends HTMLExporter {
     public String toHTML(PCM pcm) {
         if(pcmParams.isInvert()) {
             pcm.invert(new PCMFactoryImpl());
+            pcmParams.invertParams();
         }
         settings.prettyPrint();
         Document document = Jsoup.parse(htmlTemplate);
