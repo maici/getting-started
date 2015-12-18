@@ -9,6 +9,9 @@ import com.gargoylesoftware.htmlunit.BrowserVersion;
 import com.gargoylesoftware.htmlunit.WebClient;
 import com.gargoylesoftware.htmlunit.html.HtmlElement;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
+import com.gargoylesoftware.htmlunit.html.HtmlTable;
+import com.gargoylesoftware.htmlunit.html.HtmlTableCell;
+import com.gargoylesoftware.htmlunit.html.HtmlTableRow;
 
 /**
  * Created by Ismail on 17/12/15.
@@ -37,12 +40,20 @@ public class PcmHTML {
 			final HtmlElement body = page.getBody();
 			//System.out.println(body.asXml());
 			assertTrue(body.asXml().contains("<table "));
-
-//			final String pageAsXml = page.asXml();
-//			assertTrue(pageAsXml.contains("<body class=\"composite\">"));
-//
-//			final String pageAsText = page.asText();
-//			assertTrue(pageAsText.contains("Support for the HTTP and HTTPS protocols"));
+			
+			//test sur les lignes et le cellules 
+			final HtmlTable table = page.getHtmlElementById("matrix_Ma super pcm !!");
+		for (final HtmlTableRow row : table.getRows()) {
+			    System.out.println("<tr> :");
+		    for (final HtmlTableCell cell : row.getCells()) {
+			        System.out.println("      cell: " + cell.asText());
+		    }
+		}
+		
+			//test sur la balise caption de la table
+			final String caption = table.getCaptionText();
+			System.out.println("caption de la matrice :" +caption);
+		  
 		}
 	}
 
