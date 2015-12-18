@@ -45,7 +45,7 @@ public class CustomHtmlExporter extends HTMLExporter {
         this.settings = new Document.OutputSettings();
     }
 
-    public boolean export(PCMContainer pcmContainer, PcmParams pcmParams) {
+    public boolean export(PCMContainer pcmContainer, PcmParams pcmParams, String path) {
         pcm = pcmContainer.getPcm();
         if(pcmContainer.getMetadata() == null) {
             pcmMetadata = new PCMMetadata(pcm);
@@ -53,7 +53,6 @@ public class CustomHtmlExporter extends HTMLExporter {
         else {
             pcmMetadata = pcmContainer.getMetadata();
         }
-        String path = "./out";
         cssFile = "style.css";
         String templatePath = "./template";
         File templateFile = new File("./template/template.html");
@@ -66,6 +65,8 @@ public class CustomHtmlExporter extends HTMLExporter {
             writer.write(htmlTemplate);
             writer.close();
             pcmCssBuilder.generateCss(path + "/css/" + cssFile);
+            File template = new File(path + "/template.html");
+            template.delete();
             return true;
         } catch (Exception e) {
             e.printStackTrace();

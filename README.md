@@ -13,7 +13,218 @@ We choose Json Format to edit the parameters for many reasons :
 * It's easy to integrate it inside a graphic interface. Indeed, this format is used in many languages likes JavaScript, PHP, Perl, Python, Ruby, Java...  
 * This format is not difficult to heard by the users et to interprate by the machins.  
 
-To exploit Json format with Java, we retained the Google-Gson library which is available on the GitHub Platform.  
+To exploit Json format with Java, we retained the Google-Gson library which is available on the GitHub Platform.
+
+### Json structure
+
+The style of the pcm can be customize mainly thought 2 json objects :
+
+1. style : define the css style.
+
+```json
+{
+    "style": {
+      "color": "#000000",
+      "backgroundColor": "#000000",
+      "fontWeight": "bold",
+      "fontStyle": "italic",
+      "font": "Arial",
+      "fontSize": "10"
+    }
+}
+```
+2. operation: an operation change the style of the pcm when the condition specified is true
+
+```json
+{
+    "id": "op_sup_0",
+    "type": "comparison",
+    "values": {
+      "operation": ">",
+      "operand": "0"
+    },
+    "style": {
+      "color": "#000000"
+    }
+}
+```
+
+3 operations are possible :
+
+* comparison : compare numeric values
+```json
+{
+    "id": "op_inf_0",
+    "type": "comparison",
+    "values": {
+      "operation": "<",
+      "operand": "0"
+    },
+    "style": {
+      "color": "#000000"
+    }
+}
+```
+* range : define an numeric range
+```json
+{
+    "id": "op_range_0_1",
+    "type": "range",
+    "values": {
+      "minValue": "0",
+      "maxValue": "1"
+    },
+    "style": {
+      "color": "#000000"
+    }
+}
+```
+* string-comparison: match a string
+```json
+{
+    "id": "op_match_test",
+    "type": "string-comparison",
+    "values": {
+      "match": "test"
+    },
+    "style": {
+      "color": "#000000"
+    }
+}
+```
+The json file is structured around 3 customizable elements :
+
+1. the pcm : style and/or operations that affect all the pcm
+
+```json
+"pcm": {
+    "title": "pcm title",
+    "description": "pcm description",
+    "style": {
+      "color": "#000000",
+      "backgroundColor": "#000000",
+      "fontWeight": "bold",
+      "fontStyle": "italic",
+      "font": "Arial",
+      "fontSize": "10"
+    },
+    "operations": [
+      {
+        "id": "op_sup_0",
+        "type": "comparison",
+        "values": {
+          "operation": ">",
+          "operand": "0"
+        },
+        "style": {
+          "color": "#000000"
+        }
+      }
+    ]
+}
+```
+
+2. the features (pcm columns) : style and/or operations that affect all the colums of the pcm
+
+```json
+"pcm": {
+    "title": "pcm title",
+    "description": "pcm description",
+    "features": {
+      "style": {
+        "color": "#000000",
+        "backgroundColor": "#000000",
+        "fontWeight": "bold",
+        "fontStyle": "italic",
+        "font": "Arial",
+        "fontSize": "10"
+      },
+      "operations": [
+        {
+          "id": "op_sup_0",
+          "type": "comparison",
+          "values": {
+            "operation": ">",
+            "operand": "0"
+          },
+          "style": {
+            "color": "#000000"
+          }
+        }
+      ]
+    }
+}
+```
+
+3. the products (pcm lines) : style and/or operation that affect all the lines of the pcm
+
+```json
+"pcm": {
+    "title": "pcm title",
+    "description": "pcm description",
+    "products": {
+      "elements": [
+        [
+          "element1",
+          {
+            "style": {
+              "color": "#000000",
+              "backgroundColor": "#000000",
+              "fontWeight": "bold",
+              "fontStyle": "italic",
+              "font": "Arial",
+              "fontSize": "10"
+            },
+            "operations": [
+              {
+                "id": "op_sup_0",
+                "type": "comparison",
+                "values": {
+                  "operation": ">",
+                  "operand": "0"
+                },
+                "style": {
+                  "color": "#000000"
+                }
+              }
+          ]
+      }
+  }
+```
+
+**Note :** You can also define a style and/or an operation for a specific feature(column) or product(line):
+```json
+"features": {
+      "elements": [
+        [
+          "column name",
+          {
+            "style": {
+              "color": "#000000",
+              "backgroundColor": "#000000",
+              "fontWeight": "bold",
+              "fontStyle": "italic",
+              "font": "Arial",
+              "fontSize": "10"
+            },
+            "operations": [
+              {
+                "id": "op_sup_0",
+                "type": "comparison",
+                "values": {
+                  "operation": ">",
+                  "operand": "0"
+                },
+                "style": {
+                  "color": "#000000"
+                }
+              }
+            ]
+          }
+        ]
+    }
+```
+
 
 ## Genesis
 
@@ -56,10 +267,30 @@ open source
 
 # Running
 
-First of all, you add a pcm in the folder 'pcm'.  
-Then in the folder 'params',  you change the parameters file with your style : Style for products, for features, for one or a group of cells , or a style for the hole matrice.  
-After that, in /src/test/java/org/opencompare/customHtmlExporter/customHtmlExporterTest.java you have to add the two files(json and pcm).
-Then indicate your Html file like ("./out/pcm_oc.html").
-Execute the class.
-Open your html file to see the result.
- 
+1. First of all, you need a pcm file and your parameters in json format.
+
+```java
+File pcmFile = new File("./src/test/pcms/example.pcm");
+File jsonFile = new File("./src/test/params/example.json");
+```
+
+2. The you need to instantiate a pcm object
+
+```java
+PCMLoader loader = new KMFJSONLoader();
+PCMContainer pcmContainer = loader.load(pcmFile).get(0);
+```
+
+3. You will also need to instantiate the pcm parameters object (json file)
+
+```java
+JsonParamsLoader jsonParamsLoader = new JsonParamsLoader(jsonFile);
+PcmParams pcmParams = jsonParamsLoader.load();
+```
+
+4. Finally you will have to create the exporter and launch the export
+
+```java
+CustomHtmlExporter exporter = new CustomHtmlExporter();
+exporter.export(pcmContainer, pcmParams, "./out");
+```
