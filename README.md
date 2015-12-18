@@ -20,6 +20,11 @@ To exploit Json format with Java, we retained the Google-Gson library which is a
 Genesis is a Java library which permit to generate CSS code. We choose this tool because of its usage looked not difficult and performant for our usage.  
 After parsing the Json file, we use it to create css classes which contain all the properties witch the user want to modify.
 
+## Bootstrap
+
+Bootstrap is an open-source Javascript framework, it is a combination of HTML, CSS, and Javascript code designed to help build user interface components. Bootstrap was also programmed to support both HTML5 and CSS3
+
+
 # Project Architecture
 
 This project is composed by 3 packages :  
@@ -51,7 +56,10 @@ open source
 
 # Running
 
-First of all , you add a pcm in the folder 'pcm'.  
+First of all, you add a pcm in the folder 'pcm'.  
 Then in the folder 'params',  you change the parameters file with your style : Style for products, for features, for one or a group of cells , or a style for the hole matrice.  
-After that, in /src/test/java/org/opencompare/customHtmlExporter/customHtmlExporterTest.java you have to add the two files(json and pcm).  
+After that, in /src/test/java/org/opencompare/customHtmlExporter/customHtmlExporterTest.java you have to add the two files(json and pcm).
+Then indicate your Html file like ("./out/pcm_oc.html").
+Execute the class.
+Open your html file to see the result.
  
