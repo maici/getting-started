@@ -19,8 +19,7 @@ To exploit Json format with Java, we retained the Google-Gson library which is a
 
 The style of the pcm can be customize mainly thought 2 json objects :
 
-1. style : define the css style.
-
+1. Style : define the css style.
 ```json
 {
     "style": {
@@ -33,8 +32,7 @@ The style of the pcm can be customize mainly thought 2 json objects :
     }
 }
 ```
-2. operation: an operation change the style of the pcm when the condition specified is true
-
+2. Operation: an operation change the style of the pcm when the condition specified is true
 ```json
 {
     "id": "op_sup_0",
@@ -48,9 +46,7 @@ The style of the pcm can be customize mainly thought 2 json objects :
     }
 }
 ```
-
 3 operations are possible :
-
 * comparison : compare numeric values
 ```json
 {
@@ -127,7 +123,7 @@ The json file is structured around 3 customizable elements :
 2. the features (pcm columns) : style and/or operations that affect all the colums of the pcm
 
 ```json
-"pcm": {
+"pcm":{
     "title": "pcm title",
     "description": "pcm description",
     "features": {
@@ -153,42 +149,38 @@ The json file is structured around 3 customizable elements :
         }
       ]
     }
-}
+  }
 ```
 
 3. the products (pcm lines) : style and/or operation that affect all the lines of the pcm
 
 ```json
-"pcm": {
+"pcm":{
     "title": "pcm title",
     "description": "pcm description",
     "products": {
-      "elements": [
-        [
-          "element1",
-          {
-            "style": {
-              "color": "#000000",
-              "backgroundColor": "#000000",
-              "fontWeight": "bold",
-              "fontStyle": "italic",
-              "font": "Arial",
-              "fontSize": "10"
-            },
-            "operations": [
-              {
-                "id": "op_sup_0",
-                "type": "comparison",
-                "values": {
-                  "operation": ">",
-                  "operand": "0"
-                },
-                "style": {
-                  "color": "#000000"
-                }
-              }
-          ]
-      }
+      "style": {
+        "color": "#000000",
+        "backgroundColor": "#000000",
+        "fontWeight": "bold",
+        "fontStyle": "italic",
+        "font": "Arial",
+        "fontSize": "10"
+      },
+      "operations": [
+        {
+          "id": "op_sup_0",
+          "type": "comparison",
+          "values": {
+            "operation": ">",
+            "operand": "0"
+          },
+          "style": {
+            "color": "#000000"
+          }
+        }
+      ]
+    }
   }
 ```
 
