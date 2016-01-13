@@ -38,7 +38,7 @@ public class StringComparison implements IOperation<String> {
      */
     @Override
     public boolean execute(String value) {
-        if(string.equals(value)) return true;
+        if(value.matches(this.string)) return true;
         return false;
     }
 

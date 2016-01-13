@@ -81,7 +81,7 @@
           {
             "operations": [
               {
-                "id": "weigh_sup_600",
+                "id": "weight_sup_600",
                 "type": "comparison",
                 "values": {
                   "operation": ">",

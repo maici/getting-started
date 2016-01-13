@@ -1,22 +1,40 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8">
-    <title></title>
-    
+<meta charset="UTF-8">
+<title></title>
 <!---- Boostrap CSS FILES ---->
 <link href="css/bootstrap.min.css" rel="stylesheet" />
 <link href="css/bootstrap-theme.min.css" rel="stylesheet" />
-<link href="css/bootstrap.css" rel="stylesheet" />
-<link href="css/bootstrap-theme.css" rel="stylesheet" />
-
+<link rel="stylesheet" type="text/css" href="css/datatables.min.css"/>
 </head>
 <body>
-
-
 </body>
-<script type="text/javascript"> 
 <!---- JS FILES ---->
-
+<script type="text/javascript" language="javascript" src="js/datatables.min.js"></script>
+<script type="text/javascript" language="javascript" src="js/datatables.resize.js"></script>
+<script type="text/javascript"> 
+$(document).ready(function() {
+    $('#pcm').DataTable({
+    	dom: 'Zlfrtip',
+        stripeClasses:[],
+    	scrollX: true,
+    	language: {
+        	"url": "http://cdn.datatables.net/plug-ins/1.10.10/i18n/French.json"
+        },
+        colReorder: {
+        	realtime: true,
+        	fixedColumnsLeft: 1
+        },
+        rowReorder: {
+        	selector: 'tr'
+        },
+        colResize: {
+        	tableWidthFixed: false
+        },
+        fixedHeader: true,
+        fixedColumns: true
+    });
+});
 </script>
 </html>

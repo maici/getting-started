@@ -35,7 +35,7 @@ public class PcmCssBuilder{
      * @param properties List of the modified properties and their value
      */
     public void addModule(String classe, Map<String, String> properties){
-        modules.put(classe, new PcmCssModule(classe, properties).getModule());
+        modules.put("." + classe, new PcmCssModule("." + classe, properties).getModule());
     }
 
     /**

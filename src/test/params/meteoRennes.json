@@ -1,0 +1,18 @@
+{
+  "pcm": {
+    "title": "Meteo Rennes",
+    "description": "Rennes – Saint-Jacques-de-la-Lande - Températures extrêmes de 1945 à 2015",
+    "products": {
+      "elements": [
+        [
+          "",
+          {
+            "style": {
+              "backgroundColor": "#97DEFF"
+            }
+          }
+        ]
+      ]
+    }
+  }
+}
