@@ -256,7 +256,11 @@ This package contains the classes which permit the generation of the css file us
 
 # Licence
 
-open source
+Apache v2 (see [a link] https://github.com/maici/getting-started/blob/master/LICENSE )
+
+# Screen cast
+
+A demonstration is available here : [a link]https://www.dropbox.com/s/qy2u27drslo8fok/groupe6_oc_screencast.avi?dl=0
 
 # Running
 
@@ -267,14 +271,14 @@ File pcmFile = new File("./src/test/pcms/example.pcm");
 File jsonFile = new File("./src/test/params/example.json");
 ```
 
-* The you need to instantiate a pcm object
+* Then you have to instantiate a pcm object
 
 ```java
 PCMLoader loader = new KMFJSONLoader();
 PCMContainer pcmContainer = loader.load(pcmFile).get(0);
 ```
 
-* You will also need to instantiate the pcm parameters object (json file)
+* You will also have to instantiate the pcm parameters object from the json file
 
 ```java
 JsonParamsLoader jsonParamsLoader = new JsonParamsLoader(jsonFile);
